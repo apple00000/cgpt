@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	client := openai.NewClient("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")
+	client := openai.NewClient("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")
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{
