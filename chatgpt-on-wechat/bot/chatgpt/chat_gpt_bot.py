@@ -103,10 +103,10 @@ class ChatGPTBot(Bot,OpenAIImage):
             if config.conf().get('rate_limit_chatgpt') and not self.tb4chatgpt.get_token():
                 return {"completion_tokens": 0, "content": "提问太快啦，请休息一下再问我吧"}
             
-            print("[session_id] session_id: ", session_id)
-            print("[reply_text] session.messages: ", session.messages)
-            print("[reply_text] self.compose_args(): ", self.compose_args())
-
+            # print("[session_id] session_id: ", session_id)
+            # print("[reply_text] session.messages: ", session.messages)
+            # print("[reply_text] self.compose_args(): ", self.compose_args())
+  
             response = openai.ChatCompletion.create(messages=session.messages, **self.compose_args())
 
             return {"total_tokens": response["usage"]["total_tokens"],
