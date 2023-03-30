@@ -66,7 +66,7 @@ class SessionManager(object):
             logger.debug("Exception when counting tokens precisely for prompt: {}".format(str(e)))
         return session
     
-    def session_query2(self, query, session_id, system_prompt):
+    def session_query_with_prompt(self, query, session_id, system_prompt):
         session = self.build_session(session_id, system_prompt)
         session.add_query(query)
         try:

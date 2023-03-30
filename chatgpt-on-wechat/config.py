@@ -66,8 +66,6 @@ available_setting ={
 
     # chatgpt指令自定义触发词
     "clear_memory_commands": ['#清除记忆'], # 重置会话指令
-
-
 }
 
 class Config(dict):
@@ -88,8 +86,57 @@ class Config(dict):
             return default
         except Exception as e:
             raise e
-    
+
+# 全局变量 
 config = Config()
+# 全局知识
+system_desc = ""
+# 分片知识
+# keyword -> knowledge_id set()
+keyword_set = {}
+
+# 根据用户query，获取私有知识
+def get_private_desc_by_query(query):
+    global keyword_set
+    res = []
+    for kw in keyword_set:
+        if kw in query:
+            knowledge_set = keyword_set[kw]
+            for s in knowledge_set:
+                res.append(s)
+    return "\n\n\n".join(res)
+
+# 加载私有知识
+def load_private_desc():
+    filelist = os.listdir("./file")
+    for file in filelist:
+        if file=="system_desc.txt":
+            continue
+        s = read_file("./file/"+file)
+        slist = s.split("\n")
+        if len(slist)<2:
+            continue
+        kws = slist[0].split(" ")
+        value = "\n".join(slist[1:])
+        solve_private_desc(kws, value)
+    print("[load_private_desc] ", keyword_set)
+
+# 处理私有知识
+def solve_private_desc(kws, value):
+    global keyword_set
+    for kw in kws:
+        if kw=="":
+            continue
+        if kw not in keyword_set:
+            keyword_set[kw] = set()
+        keyword_set[kw].add(value)
+
+# 加载公共知识
+def load_system_desc():
+    global system_desc
+    system_desc = read_file("./file/system_desc.txt")
+    print("[load_system_desc] ", system_desc)
+   
 
 def load_config():
     global config

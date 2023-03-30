@@ -7,7 +7,10 @@ from plugins import *
 from bridge.context import *
 
 def run():
+    config.load_private_desc()
     config.load_config()
+    config.load_system_desc()
+
     b = ChatGPTBot()
     
     c = Context(
@@ -15,7 +18,7 @@ def run():
 	)
     c['session_id']="aaa"
     
-    r11 = b.reply("推荐一些福州学区房", c)
+    r11 = b.reply("则徐中学对口小学有哪些？", c)
     print(r11)
 
 if __name__ == '__main__':
