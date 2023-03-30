@@ -19,7 +19,7 @@ class Resquest(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
         
-                c['session_id']= str(sentence).split("&")[0]
+        c['session_id']= str(sentence).split("&")[0]
         v = str(sentence).split("&")[1]
 		
         r11 = bot.reply(v, c)
