@@ -20,6 +20,11 @@ class ChatGPTSession(Session):
         system_item = {'role': 'system', 'content': system}
         self.messages = [system_item]
 
+    # add_system
+    def add_system(self, system):
+        system_item = {'role': 'system', 'content': system}
+        self.messages.append(system_item)
+
     def reset(self):
         system_item = {'role': 'system', 'content': self.system_prompt}
         self.messages = [system_item]

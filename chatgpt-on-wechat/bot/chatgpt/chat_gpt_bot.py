@@ -49,15 +49,13 @@ class ChatGPTBot(Bot,OpenAIImage):
                 return reply
             
 
-
-
             # !!! 根据 query 构建知识库
-            private_knowledge = config.get_private_desc_by_query(query)
+            # private_knowledge = config.get_private_desc_by_query(query)
   
-            session = self.sessions.session_query_with_prompt(query, session_id, config.system_desc+"\n\n\n"+private_knowledge)
+            # session = self.sessions.session_query_with_prompt(query, session_id, config.system_desc+"\n\n\n"+private_knowledge)
 
-
-
+            session = self.sessions.session_query_with_prompt(query, session_id, config.system_desc)
+            
             logger.debug("[OPEN_AI] session query={}".format(session.messages))
 
             reply_content = self.reply_text(session, session_id, 0)

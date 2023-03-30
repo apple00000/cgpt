@@ -14,6 +14,10 @@ class Session(object):
     def set_system(self, system):
         raise NotImplementedError
     
+    # add_system
+    def add_system(self, system):
+        raise NotImplementedError
+    
     # 重置会话
     def reset(self):
         raise NotImplementedError
@@ -54,6 +58,22 @@ class SessionManager(object):
             self.sessions[session_id].set_system_prompt(system_prompt)
         session = self.sessions[session_id]
         return session
+    
+    # def build_session_multi(self, session_id, system_prompts):
+    #     '''
+    #         如果session_id不在sessions中，创建一个新的session并添加到sessions中
+    #         如果system_prompt不会空，会更新session的system_prompt并重置session
+    #     '''
+    #     if session_id not in self.sessions:
+    #         self.sessions[session_id] = self.sessioncls(session_id, system_prompts[0], **self.session_args)
+    #         if len(system_prompts)>1:
+    #             for i in range (1, len(system_prompts)):
+    #                 self.sessions[session_id].add_system(system_prompts[i])
+    #     else:
+    #         for i in range (len(system_prompts)):
+    #             self.sessions[session_id].add_system(system_prompts[i])
+    #     session = self.sessions[session_id]
+    #     return session
     
     def session_query(self, query, session_id):
         session = self.build_session(session_id)

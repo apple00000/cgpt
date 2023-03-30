@@ -91,6 +91,7 @@ class Config(dict):
 config = Config()
 # 全局知识
 system_desc = ""
+system_desc_2 = ""
 # 分片知识
 # keyword -> knowledge_id set()
 keyword_set = {}
@@ -136,6 +137,11 @@ def load_system_desc():
     global system_desc
     system_desc = read_file("./file/system_desc.txt")
     print("[load_system_desc] ", system_desc)
+
+def load_system_desc_2():
+    global system_desc_2
+    system_desc_2 = read_file("./file/system_desc_2.txt")
+    print("[load_system_desc_2] ", system_desc_2)
    
 
 def load_config():

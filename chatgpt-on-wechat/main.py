@@ -10,6 +10,7 @@ def run():
     config.load_private_desc()
     config.load_config()
     config.load_system_desc()
+    config.load_system_desc_2()
 
     b = ChatGPTBot()
     
@@ -18,7 +19,7 @@ def run():
 	)
     c['session_id']="aaa"
     
-    r11 = b.reply("则徐中学对口小学有哪些？", c)
+    r11 = b.reply("可以推荐一些福州的学区房吗", c)
     print(r11)
 
 if __name__ == '__main__':
