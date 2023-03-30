@@ -1,0 +1,17 @@
+{
+  "open_ai_api_key": "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",
+  "model": "gpt-3.5-turbo",
+  "proxy": "",
+  "use_azure_chatgpt": false,
+  "single_chat_prefix": ["bot", "@bot"],
+  "single_chat_reply_prefix": "[祖平说房] ",
+  "group_chat_prefix": ["@bot"],
+  "group_name_white_list": ["祖平nlg小分队", "ChatGPT测试群2"],
+  "group_chat_in_one_session": ["ChatGPT测试群"],
+  "image_create_prefix": ["画", "看", "找"],
+  "speech_recognition": false,
+  "group_speech_recognition": false,
+  "voice_reply_voice": false,
+  "conversation_max_tokens": 1000,
+  "expires_in_seconds": 3600,
+  "character_desc": ""}
