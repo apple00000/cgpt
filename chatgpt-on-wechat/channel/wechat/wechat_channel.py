@@ -269,7 +269,9 @@ class WechatChannel(Channel):
         reply_text = ""
 
         res = requests.get(url='http://34.28.10.140:10001', params={"session":context["session_id"], "query": context.content})
-        reply_text = res
+        print("tttttt:", res.text)
+
+        reply_text = res.text
 
         # reply的包装步骤
         if context['isgroup']:
