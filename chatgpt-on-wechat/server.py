@@ -9,7 +9,7 @@ from bot.chatgpt.chat_gpt_bot import ChatGPTBot
 from plugins import *
 from bridge.context import *
 
-host = ('0.0.0.0', 10001)
+host = ('0.0.0.0', 80)
 
 class Resquest(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -19,12 +19,12 @@ class Resquest(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
         
-        c['session_id']= str(sentence).split("&")[0]
-        v = str(sentence).split("&")[1]
+        c['session_id']= str(sentence).split("qwerasdf")[0]
+        v = str(sentence).split("qwerasdf")[1]
 		
         r11 = bot.reply(v, c)
 
-        self.wfile.write(json.dumps(r11).encode())
+        self.wfile.write(json.dumps(r11.content).encode())
 
 if __name__ == '__main__':
     config.load_private_desc()
