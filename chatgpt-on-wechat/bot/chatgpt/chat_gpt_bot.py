@@ -48,7 +48,6 @@ class ChatGPTBot(Bot,OpenAIImage):
             if reply:
                 return reply
             
-
             # !!! 根据 query 构建知识库
             # private_knowledge = config.get_private_desc_by_query(query)
   

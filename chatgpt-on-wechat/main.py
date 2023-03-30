@@ -12,14 +12,13 @@ def run():
     config.load_system_desc()
     config.load_system_desc_2()
 
-    b = ChatGPTBot()
-    
+    bot = ChatGPTBot()
     c = Context(
         type=ContextType.TEXT
 	)
     c['session_id']="aaa"
     
-    r11 = b.reply("可以推荐一些福州的学区房吗", c)
+    r11 = bot.reply("可以推荐一些福州的学区房吗", c)
     print(r11)
 
 if __name__ == '__main__':
