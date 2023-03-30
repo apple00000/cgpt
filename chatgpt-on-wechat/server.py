@@ -9,7 +9,7 @@ from bot.chatgpt.chat_gpt_bot import ChatGPTBot
 from plugins import *
 from bridge.context import *
 
-host = ('0.0.0.0', 80)
+host = ('0.0.0.0', 10001)
 
 class Resquest(BaseHTTPRequestHandler):
     def do_GET(self):
