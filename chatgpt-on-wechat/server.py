@@ -15,7 +15,6 @@ def hello_world():
     query = request.args['query']
     bot_context['session_id'] = session
     r = bot.reply(query, bot_context)
-    # print("session:",session, "query:",query)
 
     return r.content
 
@@ -28,7 +27,6 @@ if __name__ == '__main__':
     bot_context = Context(
         type = ContextType.TEXT
 	)
-    # bot.sessions.build_session
     
     server = pywsgi.WSGIServer(('0.0.0.0', 10001), app)
     print("server start...")
