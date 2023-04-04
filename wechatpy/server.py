@@ -13,15 +13,14 @@ def hello_world():
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
-    echostr = request.args['echostr']
-    print("xxx2", signature, timestamp, nonce, echostr)
+    print("xxx2", signature, timestamp, nonce)
  
     try:
         check_signature(token, signature, timestamp, nonce)
     except InvalidSignatureException:
         pass
 
-    return echostr
+    return "222"
 
 if __name__ == '__main__':
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
