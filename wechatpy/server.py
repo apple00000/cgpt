@@ -1,6 +1,7 @@
 from wechatpy.utils import check_signature
 from wechatpy.exceptions import InvalidSignatureException
 from flask import Flask, request
+from wechatpy import parse_message
 from gevent import pywsgi
 import json
 
@@ -13,8 +14,12 @@ def hello_world():
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
-    print("xxx2", signature, timestamp, nonce)
+    xml = request.args['xml']
+    print("xxx2", signature, timestamp, nonce, xml)
  
+    msg = parse_message(xml)
+    print("xxx3", msg)
+    
     # try:
     #     check_signature(token, signature, timestamp, nonce)
     # except InvalidSignatureException:
