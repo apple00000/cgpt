@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__) #实例化Flask对象app
 
-@app.route('/wechat_msg', methods=['GET']) #app中的route装饰器
+@app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
     print("xxx1")
     token = "zpsf01234560123456"
