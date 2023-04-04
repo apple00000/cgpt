@@ -14,10 +14,10 @@ def hello_world():
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
-    xml = request.args['xml']
-    print("xxx2", signature, timestamp, nonce, xml)
+    raw_data = request.data
+    print("xxx2", signature, timestamp, nonce, raw_data)
  
-    msg = parse_message(xml)
+    msg = parse_message(raw_data)
     print("xxx3", msg)
     
     # try:
