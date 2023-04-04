@@ -15,12 +15,13 @@ def hello_world():
     nonce = request.args['nonce']
     print("xxx2", signature, timestamp, nonce)
  
-    try:
-        check_signature(token, signature, timestamp, nonce)
-    except InvalidSignatureException:
-        pass
+    # try:
+    #     check_signature(token, signature, timestamp, nonce)
+    # except InvalidSignatureException:
+    #     print("xxx3")
+    #     pass
 
-    return "222"
+    return ""
 
 if __name__ == '__main__':
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
