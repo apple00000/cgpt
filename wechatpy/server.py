@@ -9,6 +9,7 @@ import requests
 from loguru import logger
 import xmltodict
 from wechatpy.utils import to_text
+from threading import Thread
 
 
 cache = {}
@@ -45,11 +46,8 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
-    logger.info("[ai_res] {}".format(res.text))
-
-    res_code = client.message.send_text(openid, res.text)
-    logger.info("[send_text] {}".format(res_code))
+    t=Thread(target=get_ai, args=(openid, content))
+    t.start()
 
     # try:
     #     check_signature(token, signature, timestamp, nonce)
@@ -58,6 +56,14 @@ def hello_world():
     #     pass
 
     return ""
+
+def get_ai(openid, content):
+    logger.info("[get_ai] {} {}".format(openid, content))
+    res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
+    logger.info("[ai_res] {}".format(res.text))
+
+    res_code = client.message.send_text(openid, res.text)
+    logger.info("[send_text] {}".format(res_code))
 
 if __name__ == '__main__':  
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
