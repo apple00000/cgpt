@@ -6,7 +6,7 @@ from gevent import pywsgi
 import json
 from wechatpy import WeChatClient
 
-client = WeChatClient('appid', 'secret')
+client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
 app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
