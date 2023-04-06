@@ -38,11 +38,11 @@ def hello_world():
     msg = xmltodict.parse(to_text(raw_data))['xml']
     logger.info("[get_msg] {}".format(msg))
 
-    if msg.msgtype != 'text':
-        logger.info('[msgtype] {}'.format(msg.msgtype))
+    if msg['MsgType']!='text':
+        logger.info('[msgtype] {}'.format(msg['MsgType']))
         return ""
     
-    content = msg.content
+    content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
     res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
@@ -60,9 +60,6 @@ def hello_world():
     return ""
 
 if __name__ == '__main__':  
-    # raw_data = ''  
-    # msg = xmltodict.parse(to_text(raw_data))['xml']
-    # logger.info("[get_msg] {}".format(msg))
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
     logger.info("server start...")
     server.serve_forever()
