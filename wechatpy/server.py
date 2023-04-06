@@ -7,6 +7,8 @@ import json
 from wechatpy import WeChatClient
 import requests
 from loguru import logger
+import xmltodict
+from wechatpy.utils import to_text
 
 
 cache = {}
@@ -30,8 +32,10 @@ def hello_world():
     cache[openid+timestamp] = True
 
     raw_data = request.data
-    logger.info("[get_user] {} {} {} {}".format(signature, timestamp, nonce, openid))
-    msg = parse_message(raw_data)
+    logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
+
+    # msg = parse_message(raw_data)
+    msg = xmltodict.parse(to_text(raw_data))['xml']
     logger.info("[get_msg] {}".format(msg))
 
     if msg.msgtype != 'text':
@@ -55,10 +59,13 @@ def hello_world():
 
     return ""
 
-if __name__ == '__main__':    
-    server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
-    logger.info("server start...")
-    server.serve_forever()
+if __name__ == '__main__':  
+    raw_data = ''  
+    msg = xmltodict.parse(to_text(raw_data))['xml']
+    logger.info("[get_msg] {}".format(msg))
+    # server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
+    # logger.info("server start...")
+    # server.serve_forever()
     
 
 def read_file(path):
