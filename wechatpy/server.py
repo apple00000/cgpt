@@ -21,7 +21,7 @@ def hello_world():
     print("[get_user] ", signature, timestamp, nonce, openid)
     msg = parse_message(raw_data)
     print("[get_msg] ", msg)
-    content = msg['Content']
+    content = msg.content
     print("[get_msg_content] ", content)
 
     res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
