@@ -27,7 +27,7 @@ def hello_world():
     res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
     print("[ai_res]:", res.text)
 
-    res = client.message.send_text(openid, '222')
+    res = client.message.send_text(openid, res.text)
     print("[send_text] ", res)
 
     # try:
