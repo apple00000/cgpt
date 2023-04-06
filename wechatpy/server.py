@@ -5,27 +5,31 @@ from wechatpy import parse_message
 from gevent import pywsgi
 import json
 from wechatpy import WeChatClient
+import requests
 
 client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
 app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
-    print("xxx1")
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
     openid = request.args['openid']
     raw_data = request.data
-    print("xxx2", signature, timestamp, nonce, openid, raw_data)
+    print("[get_user] ", signature, timestamp, nonce, openid)
+    msg = parse_message(raw_data)
+    print("[get_msg] ", msg)
+    content = msg.Content
+    print("[get_msg_content] ", content)
+
+    res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
+    print("[ai_res]:", res.text)
 
     res = client.message.send_text(openid, '222')
-    print("xxx3", res)
+    print("[send_text] ", res)
 
-    msg = parse_message(raw_data)
-    print("xxx4", msg)
-    
     # try:
     #     check_signature(token, signature, timestamp, nonce)
     # except InvalidSignatureException:

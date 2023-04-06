@@ -269,7 +269,7 @@ class WechatChannel(Channel):
         reply_text = ""
 
         res = requests.get(url='http://34.28.10.140:10001', params={"session":context["session_id"], "query": context.content})
-        print("tttttt:", res.text)
+        print("[ai_res]:", res.text)
 
         reply_text = res.text
 
