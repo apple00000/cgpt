@@ -34,7 +34,7 @@ def hello_world():
     raw_data = request.data
     logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
 
-    # msg = parse_message(raw_data)
+    msg = parse_message(raw_data)
     msg = xmltodict.parse(to_text(raw_data))['xml']
     logger.info("[get_msg] {}".format(msg))
 
@@ -60,12 +60,12 @@ def hello_world():
     return ""
 
 if __name__ == '__main__':  
-    raw_data = ''  
-    msg = xmltodict.parse(to_text(raw_data))['xml']
-    logger.info("[get_msg] {}".format(msg))
-    # server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
-    # logger.info("server start...")
-    # server.serve_forever()
+    # raw_data = ''  
+    # msg = xmltodict.parse(to_text(raw_data))['xml']
+    # logger.info("[get_msg] {}".format(msg))
+    server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
+    logger.info("server start...")
+    server.serve_forever()
     
 
 def read_file(path):
