@@ -6,6 +6,8 @@ from gevent import pywsgi
 import json
 from wechatpy import WeChatClient
 import requests
+from loguru import logger
+
 
 cache = {}
 
@@ -23,22 +25,22 @@ def hello_world():
 
     # 去重
     if openid+timestamp in cache:
-        print("[cache] ", openid, timestamp)
+        logger.info("[cache] {} {}".format(openid, timestamp))
         return ""
     cache[openid+timestamp] = True
 
     raw_data = request.data
-    print("[get_user] ", signature, timestamp, nonce, openid)
+    logger.info("[get_user] {} {} {} {}".format(signature, timestamp, nonce, openid))
     msg = parse_message(raw_data)
-    print("[get_msg] ", msg)
+    logger.info("[get_msg] {}".format(msg))
     content = msg.content
-    print("[get_msg_content] ", content)
+    logger.info("[get_msg_content] {}".format(content))
 
     res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content})
-    print("[ai_res]:", res.text)
+    logger.info("[ai_res] {}".format(res.text))
 
-    res = client.message.send_text(openid, res.text)
-    print("[send_text] ", res)
+    res_code = client.message.send_text(openid, res.text)
+    logger.info("[send_text] {}".format(res_code))
 
     # try:
     #     check_signature(token, signature, timestamp, nonce)
@@ -48,9 +50,9 @@ def hello_world():
 
     return ""
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
-    print("server start...")
+    logger.info("server start...")
     server.serve_forever()
     
 
