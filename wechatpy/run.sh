@@ -1,0 +1,1 @@
+nohup python3 server.py & tail -f nohup.out
