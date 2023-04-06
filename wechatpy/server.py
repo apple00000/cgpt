@@ -7,7 +7,10 @@ import json
 from wechatpy import WeChatClient
 import requests
 
+cache = {}
+
 client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+
 app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
@@ -17,6 +20,13 @@ def hello_world():
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
     openid = request.args['openid']
+
+    # 去重
+    if openid+timestamp in cache:
+        print("[cache] ", openid, timestamp)
+        return ""
+    cache[openid+timestamp] = True
+
     raw_data = request.data
     print("[get_user] ", signature, timestamp, nonce, openid)
     msg = parse_message(raw_data)
