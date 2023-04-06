@@ -33,6 +33,11 @@ def hello_world():
     logger.info("[get_user] {} {} {} {}".format(signature, timestamp, nonce, openid))
     msg = parse_message(raw_data)
     logger.info("[get_msg] {}".format(msg))
+
+    if msg.msgtype != 'text':
+        logger.info('[msgtype] {}'.format(msg.msgtype))
+        return ""
+    
     content = msg.content
     logger.info("[get_msg_content] {}".format(content))
 
