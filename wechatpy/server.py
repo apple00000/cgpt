@@ -71,7 +71,12 @@ def read_file(path):
 def get_ai(openid, content, system_desc):
     logger.info("[get_ai] {} {}".format(openid, content))
 
-    res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content, "system": system_desc})
+    post_dict = {}
+    post_dict["session"] = openid
+    post_dict["query"] = content
+    post_dict["system"] = system_desc
+
+    res = requests.post(url='http://34.28.10.140:10001', data=post_dict)
     logger.info("[ai_res] {}".format(res.text))
 
     res_code = client.message.send_text(openid, res.text)
