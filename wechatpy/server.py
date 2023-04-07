@@ -75,8 +75,9 @@ def get_ai(openid, content, system_desc):
     post_dict["session"] = openid
     post_dict["query"] = content
     post_dict["system"] = system_desc
+    j = json.dumps(post_dict)
 
-    res = requests.post(url='http://34.28.10.140:10001', data=post_dict)
+    res = requests.post(url='http://34.28.10.140:10001', data=j)
     logger.info("[ai_res] {}".format(res.text))
 
     res_code = client.message.send_text(openid, res.text)
