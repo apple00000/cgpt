@@ -58,6 +58,7 @@ def hello_world():
 
 # 加载公共知识
 def load_system_desc():
+    global system_desc
     system_desc = read_file("./system_desc.txt")
     print("[load_system_desc] ", system_desc)
 
