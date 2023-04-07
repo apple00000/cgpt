@@ -45,7 +45,7 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content))
+    t=Thread(target=get_ai, args=(openid, content, system_desc))
     t.start()
 
     # try:
@@ -67,8 +67,7 @@ def read_file(path):
 
 
 # 调用openai接口
-def get_ai(openid, content):
-    global system_desc
+def get_ai(openid, content, system_desc):
     logger.info("[get_ai] {} {}".format(openid, content))
     logger.info("system_desc: {}".format(system_desc))
 
