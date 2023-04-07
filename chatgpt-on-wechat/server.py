@@ -11,12 +11,11 @@ app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
-    print(request.args)
-    print(request.data)
-    print(request)
-    # session = request.json['session']
-    # query = request.json['query']
-    # system = request.json['system']
+    j = json.loads(request.data)
+    print(j)
+    session = j['session']
+    query = j['query']
+    system = j['system']
 
     # session = request.args['session']
     # query = request.args['query']
