@@ -13,8 +13,9 @@ app = Flask(__name__) #实例化Flask对象app
 def hello_world():
     session = request.args['session']
     query = request.args['query']
+    system = request.args['system']
     bot_context['session_id'] = session
-    r = bot.reply(query, bot_context)
+    r = bot.reply(query,system, bot_context)
 
     return r.content
 

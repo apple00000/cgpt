@@ -7,7 +7,7 @@ from bridge.reply import Reply, ReplyType
 
 # Baidu Unit对话接口 (可用, 但能力较弱)
 class BaiduUnitBot(Bot):
-    def reply(self, query, context=None):
+    def reply(self, query, sys, context=None):
         token = self.get_token()
         url = 'https://aip.baidubce.com/rpc/2.0/unit/service/v3/chat?access_token=' + token
         post_data = "{\"version\":\"3.0\",\"service_id\":\"S73177\",\"session_id\":\"\",\"log_id\":\"7758521\",\"skill_ids\":[\"1221886\"],\"request\":{\"terminal_id\":\"88888\",\"query\":\"" + query + "\", \"hyper_params\": {\"chat_custom_bot_profile\": 1}}}"

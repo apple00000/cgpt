@@ -28,7 +28,7 @@ class ChatGPTBot(Bot,OpenAIImage):
         
         self.sessions = SessionManager(ChatGPTSession, model= config.conf().get("model") or "gpt-3.5-turbo")
 
-    def reply(self, query, context=None):
+    def reply(self, query, sys, context=None):
         # acquire reply content
         if context.type == ContextType.TEXT:
             logger.info("[OPEN_AI] query={}".format(query))
@@ -47,13 +47,8 @@ class ChatGPTBot(Bot,OpenAIImage):
                 reply = Reply(ReplyType.INFO, '配置已更新')
             if reply:
                 return reply
-            
-            # !!! 根据 query 构建知识库
-            # private_knowledge = config.get_private_desc_by_query(query)
-  
-            # session = self.sessions.session_query_with_prompt(query, session_id, config.system_desc+"\n\n\n"+private_knowledge)
 
-            session = self.sessions.session_query_with_prompt(query, session_id, config.system_desc)
+            session = self.sessions.session_query_with_prompt(query, session_id, sys)
             
             logger.debug("[OPEN_AI] session query={}".format(session.messages))
 

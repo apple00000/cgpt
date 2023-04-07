@@ -26,7 +26,7 @@ class OpenAIBot(Bot, OpenAIImage):
 
         self.sessions = SessionManager(OpenAISession, model= conf().get("model") or "text-davinci-003")
 
-    def reply(self, query, context=None):
+    def reply(self, query, sys, context=None):
         # acquire reply content
         if context and context.type:
             if context.type == ContextType.TEXT:
