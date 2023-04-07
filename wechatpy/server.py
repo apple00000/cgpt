@@ -68,7 +68,6 @@ def read_file(path):
 
 # 调用openai接口
 def get_ai(openid, content):
-    global system_desc
     logger.info("[get_ai] {} {}".format(openid, content))
 
     res = requests.post(url='http://34.28.10.140:10001', params={"session":openid, "query": content, "system": system_desc})
