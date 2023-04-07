@@ -15,7 +15,7 @@ def hello_world():
     query = request.args['query']
     system = request.args['system']
 
-    logger.info("[hello_world] session {}, query {}, system{}".format(session, query, system))
+    logger.info("[hello_world] session {}, query {}, system {}".format(session, query, system))
     bot_context['session_id'] = session
     r = bot.reply(query, system, bot_context)
 
