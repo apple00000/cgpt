@@ -9,13 +9,13 @@ import json
 
 app = Flask(__name__) #实例化Flask对象app
 
-@app.route('/', methods=['GET']) #app中的route装饰器
+@app.route('/', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
     session = request.args['session']
     query = request.args['query']
     system = request.args['system']
     bot_context['session_id'] = session
-    r = bot.reply(query,system, bot_context)
+    r = bot.reply(query, system, bot_context)
 
     return r.content
 
