@@ -70,9 +70,8 @@ def read_file(path):
 # 调用openai接口
 def get_ai(openid, content, system_desc):
     logger.info("[get_ai] {} {}".format(openid, content))
-    logger.info("system_desc: {}".format(system_desc))
 
-    res = requests.post(url='http://34.28.10.140:10001', params={"session":openid, "query": content, "system": system_desc})
+    res = requests.get(url='http://34.28.10.140:10001', params={"session":openid, "query": content, "system": system_desc})
     logger.info("[ai_res] {}".format(res.text))
 
     res_code = client.message.send_text(openid, res.text)
