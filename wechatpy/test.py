@@ -4,4 +4,4 @@ from elasticsearch import Elasticsearch
 es = Elasticsearch("https://0.0.0.0:9200")
  
 # 插入数据,index，doc_type名称可以自定义，id可以根据需求赋值,body为内容
-es.index(index="index", body={"title":"python", "content":"深圳"})
+es.index(index="index", document={"title":"python", "content":"深圳"})
