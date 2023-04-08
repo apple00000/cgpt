@@ -54,6 +54,7 @@ def hello_world():
 
 @app.route('/wechat_msg_2', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world_2():
+    logger.info("wechat_msg_2...")
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
