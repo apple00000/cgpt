@@ -1,4 +1,5 @@
 from elasticsearch import Elasticsearch
+import json
 
 Es_App = Elasticsearch("http://0.0.0.0:9200")
 
@@ -16,6 +17,6 @@ def get_es_all_data(idx):
 	res = []
 	for r in es_result['hits']['hits']:
 		res.append(EsKnowledge(r['_id'], r['_source']['title'], r['_source']['content'])) 
-	print('xxx', res)       
+	print('xxx', json.load(res))     
 	return res
     
