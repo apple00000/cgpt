@@ -13,12 +13,17 @@ from threading import Thread
 
 cache = {}
 system_desc = ""
-client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+client = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a')
 
 app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
+    # 验证
+    # check_signature(token, signature, timestamp, nonce)
+    echostr = request.args['echostr']
+    return echostr
+
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
@@ -47,12 +52,6 @@ def hello_world():
 
     t=Thread(target=get_ai, args=(openid, content, system_desc))
     t.start()
-
-    # try:
-    #     check_signature(token, signature, timestamp, nonce)
-    # except InvalidSignatureException:
-    #     print("xxx3")
-    #     pass
 
     return ""
 
@@ -99,9 +98,9 @@ def get_ai(openid, content, system_desc):
 
 
 if __name__ == '__main__':  
-    load_system_desc()
+    # load_system_desc()
 
-    server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
+    server = pywsgi.WSGIServer(('0.0.0.0', 443), app)
     logger.info("server start...")
     server.serve_forever()
     
