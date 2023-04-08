@@ -28,9 +28,12 @@ def sys_command(idx, command):
 
 		return res
 
-	if command.startswith('&&查询模型'):
-		command = command.replace('&&查询模型', '')
+	if command.startswith('&&查询单个模型'):
+		command = command.replace('&&查询单个模型', '')
 		command = command.strip()
+		if command=="":
+			return "模型id不能为空"
+		
 		es_res = es_query_id(idx, command)
 		res = ""
 		for r in es_res:
@@ -38,6 +41,30 @@ def sys_command(idx, command):
 		if res=="":
 			res = "无数据"
 		return res
+	
+	if command.startswith('&&添加模型'):
+		command = command.replace('&&添加模型', '')
+		command = command.strip()
+		items = command.split('\n')
+		if len(items)<2:
+			return "模型需要包含标题和内容，第一行是标题，后面是内容"
+		title = items[0]
+		content = '\n'.join(items[1:])
+		es_add_data(idx, title, content)
+		return "ok"
+
+	if command.startswith('&&删除单个模型'):
+		command = command.replace('&&删除单个模型', '')
+		command = command.strip()
+		if command=="":
+			return "模型id不能为空"
+		
+		es_res = es_del_data(idx, command)
+		return "ok"
+	
+	if command.startswith('&&删除所有模型'):
+		es_res = es_del_all_data(idx, command)
+		return "ok"
 	
 	return "不是系统命令"
 
