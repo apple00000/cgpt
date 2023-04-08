@@ -117,7 +117,9 @@ def del_all_data():
 
 @app.route('/del_data', methods=['GET', 'POST'])
 def del_data():
-    pass
+    id = request.args['id']
+    es.es_del_data("index", id)
+    return "ok"
 
 
 @app.route('/get_all_data', methods=['GET', 'POST'])
