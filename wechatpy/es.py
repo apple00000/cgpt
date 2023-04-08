@@ -22,16 +22,21 @@ def sys_command(idx, command):
 		logger.info("[查询所有模型] es_res:{}".format(es_res))
 		res = ""
 		for r in es_res:
-			res += r.id + ' ' + r.title + '\n'
+			res += r['id'] + ' ' + r['title'] + '\n'
+		if res=="":
+			res = "无数据"
+
 		return res
 
 	if command.startswith('&&查询模型'):
-		command = command.removeprefix('&&查询模型')
+		command = command.replace('&&查询模型', '')
 		command = command.strip()
 		es_res = es_query_id(command)
 		res = ""
 		for r in es_res:
-			res += r.id + '\n' + r.title + '\n' + r.content + '\n'
+			res += r['id'] + '\n' + r['title'] + '\n' + r['content'] + '\n'
+		if res=="":
+			res = "无数据"
 		return res
 	
 	return "不是系统命令"
