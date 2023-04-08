@@ -48,10 +48,10 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    # 被动回复
+    # 系统命令
     if es.is_sys_command(content):
         sys_res = es.sys_command("index", content)
-        TextReply(sys_res)
+        send_text(openid, sys_res, client)
         return ""
     
     self_knowledge = es.es_self_knowledge("index", content)
@@ -174,6 +174,11 @@ def get_ai(openid, content, system_desc, c):
 
     res_code = c.message.send_text(openid, res.text)
     logger.info("[send_text] {}".format(res_code))
+
+
+# 主动发送消息
+def send_text(openid, content, c):
+    c.message.send_text(openid, content)
 
 
 if __name__ == '__main__':  
