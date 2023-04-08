@@ -100,16 +100,21 @@ def hello_world_2():
     return ""
 
 
-@app.route('/add_knowledge', methods=['GET', 'POST'])
-def add_knowledge():
+@app.route('/add_data', methods=['GET', 'POST'])
+def add_data():
+    title = request.args['title']
+    content = request.args['content']
+    logger.info("[add_data] title:{}, content:{}".format(title, content))
+    es.es_add_data("index", title, content)
+    r = es.es_get_all_data("index")
+    return es.to_json_str(r)
+
+@app.route('/del_data', methods=['GET', 'POST'])
+def del_data():
     pass
 
-@app.route('/del_knowledge', methods=['GET', 'POST'])
-def del_knowledge():
-    pass
-
-@app.route('/get_knowledge', methods=['GET', 'POST'])
-def get_knowledge():
+@app.route('/get_data', methods=['GET', 'POST'])
+def get_data():
     pass
 
 
