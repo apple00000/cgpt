@@ -61,15 +61,15 @@ def hello_world_2():
     nonce = request.args['nonce']
 
     # 验证
-    echostr = request.args['echostr']
-    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
-    try:
-        check_signature(token, signature, timestamp, nonce)
-        logger.info("check ok")
-        return echostr
-    except InvalidSignatureException: 
-        logger.info("check fail")    
-        return ""
+    # echostr = request.args['echostr']
+    # logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    # try:
+    #     check_signature(token, signature, timestamp, nonce)
+    #     logger.info("check ok")
+    #     return echostr
+    # except InvalidSignatureException: 
+    #     logger.info("check fail")    
+    #     return ""
     
     openid = request.args['openid']
     
