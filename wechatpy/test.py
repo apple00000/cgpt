@@ -1,6 +1,9 @@
 import es
 
-es.es_get_all_data('index')
+es.es_get_all_data("index")
+
+es.es_query("index", "aa")
+# es.es_get_all_data('index')
 
 # from elasticsearch import Elasticsearch
 

@@ -103,6 +103,11 @@ def hello_world_2():
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
     title = request.args['title']
+    if (len(title))>30:
+        return ""
+    if (len(content))>500:
+        return "content不能超过500个字符"
+
     content = request.args['content']
     logger.info("[add_data] title:{}, content:{}".format(title, content))
     es.es_add_data("index", title, content)
@@ -111,6 +116,7 @@ def add_data():
 
 @app.route('/del_all_data', methods=['GET', 'POST'])
 def del_all_data():
+    logger.info("[del_all_data]")
     es.es_del_all_data("index")
     return "ok"
     
@@ -118,6 +124,7 @@ def del_all_data():
 @app.route('/del_data', methods=['GET', 'POST'])
 def del_data():
     id = request.args['id']
+    logger.info("[del_data] id:{}".format(id))
     try:
         es.es_del_data("index", id)
     except:
@@ -127,6 +134,7 @@ def del_data():
 
 @app.route('/get_all_data', methods=['GET', 'POST'])
 def get_all_data():
+    logger.info("[get_all_data]")
     r = es.es_get_all_data("index")
     return es.to_json_str(r)
 
