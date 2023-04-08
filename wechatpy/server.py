@@ -118,7 +118,10 @@ def del_all_data():
 @app.route('/del_data', methods=['GET', 'POST'])
 def del_data():
     id = request.args['id']
-    es.es_del_data("index", id)
+    try:
+        es.es_del_data("index", id)
+    except:
+        return "未删除成功"
     return "ok"
 
 
