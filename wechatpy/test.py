@@ -1,7 +1,7 @@
 import es
 
-a = "#查询所有模型"
-print(a.startswith("#查询所有模型"))
+a = '#查询所有模型'
+print(a.startswith('#查询所有模型'))
 
 # es.es_get_all_data("index")
 

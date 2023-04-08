@@ -4,30 +4,37 @@ from loguru import logger
 
 Es_App = Elasticsearch("http://0.0.0.0:9200")
 
+def is_sys_command(command):
+	command = str(command)
+	if command.startswith('##'):
+		return True
+	return False
+
+
 # 被动回复检查
-def get_sys_command(idx, command):
+def sys_command(idx, command):
 	command = str(command)
 	logger.info('get_sys_command... {}'.format(command))
-	
-	if command.startswith('#查询所有模型'):
-		logger.info("[get_sys_command] command:{}".format(command))
+
+	if command.startswith('##get_all_model'):
+		logger.info("[get_all_model] command:{}".format(command))
 		es_res = es_get_all_data(idx)
-		logger.info("[get_sys_command] es_res:{}".format(es_res))
+		logger.info("[get_all_model] es_res:{}".format(es_res))
 		res = ""
 		for r in es_res:
 			res += r.id + ' ' + r.title + '\n'
 		return res
 
-	if command.startswith('#查询模型'):
-		command = command.removeprefix('查询模型')
+	if command.startswith('##get_model'):
+		command = command.removeprefix('##get_model')
 		command = command.strip()
 		es_res = es_query_id(command)
 		res = ""
 		for r in es_res:
 			res += r.id + '\n' + r.title + '\n' + r.content + '\n'
 		return res
-
-	return "不是命令"
+	
+	return "不是模型系统命令"
 
 
 # 新增知识
