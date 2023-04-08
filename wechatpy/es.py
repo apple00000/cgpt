@@ -13,6 +13,9 @@ def get_es_all_data(idx):
 	query = {'query': {'match_all': {}}}
 	es_result = Es_App.search(index=idx, body=query)
     
+	res = []
 	for r in es_result['hits']['hits']:
-		print('aaa', r['_source'])
+		res.append(EsKnowledge(r['_id'], r['_source']['title'], r['_source']['content'])) 
+	print('xxx', res)       
+	return res
     
