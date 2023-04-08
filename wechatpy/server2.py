@@ -26,9 +26,9 @@ def hello_world():
     openid = request.args['openid']
 
     # 验证
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {} {}".format(signature, timestamp, nonce, openid, echostr))
     try:
-        echostr = request.args['echostr']
-        logger.info("[check] {} {} {} {} {}".format(signature, timestamp, nonce, openid, echostr))
         check_signature(token, signature, timestamp, nonce)
         logger.info("check ok")
         return echostr
