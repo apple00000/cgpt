@@ -19,16 +19,19 @@ app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
-    # 验证
-    # check_signature(token, signature, timestamp, nonce)
-    echostr = request.args['echostr']
-    return echostr
-
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
     openid = request.args['openid']
+
+    # 验证
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        echostr = request.args['echostr']
+        return echostr
+    except InvalidSignatureException:     
+        return ""
 
     # 去重，微信公众号会发三次
     if openid+timestamp in cache:
