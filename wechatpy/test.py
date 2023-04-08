@@ -4,16 +4,14 @@ from elasticsearch import Elasticsearch
 es = Elasticsearch("http://0.0.0.0:9200")
  
 # 插入数据,index，doc_type名称可以自定义，id可以根据需求赋值,body为内容
-# es.index(index="index", document={"title":"python", "content":"深圳"})
+es.index(index="index", document={"title":"python2", "content":"上海"})
 
-query = {'query': {'match_all': {}}}# 查找所有文档
-query_name = {'query': {'match': {'content':'深' }}}# 查找所有文档
+# query = {'query': {'match_all': {}}}# 查找所有文档
+# query_name = {'query': {'match': {'content':'深' }}}# 查找所有文档
 
-result = es.search(index="index", body=query_name)
-print('result', result)# 返回第一个文档的内容
+# result = es.search(index="index", body=query_name)
+# print('result', result)# 返回第一个文档的内容
 
-
-query_name_2 = {'query': {'match': {'content':'上' }}}# 查找所有文档
-
-result2 = es.search(index="index", body=query_name_2)
-print('result2', result2)# 返回第一个文档的内容
+# query_name_2 = {'query': {'match': {'content':'上' }}}# 查找所有文档
+# result2 = es.search(index="index", body=query_name_2)
+# print('result2', result2)# 返回第一个文档的内容

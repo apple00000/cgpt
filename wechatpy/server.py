@@ -10,6 +10,7 @@ from loguru import logger
 import xmltodict
 from wechatpy.utils import to_text
 from threading import Thread
+import es
 
 cache = {}
 system_desc = ""
