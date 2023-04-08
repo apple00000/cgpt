@@ -4,6 +4,27 @@ from loguru import logger
 
 Es_App = Elasticsearch("http://0.0.0.0:9200")
 
+# 被动回复检查
+def get_sys_command(idx, str):
+	if str.startswith('#查询所有模型'):
+		es_res = es_get_all_data(idx)
+		res = ""
+		for r in es_res:
+			res += r.id + ' ' + r.title + '\n'
+		return res
+
+	if str.startswith('#查询模型'):
+		str = str.removeprefix('查询模型')
+		str = str.strip()
+		es_res = es_query_id(str)
+		res = ""
+		for r in es_res:
+			res += r.id + '\n' + r.title + '\n' + r.content + '\n'
+		return res
+
+	return "不是命令"
+
+
 # 新增知识
 def es_add_data(idx, title, content):
 	Es_App.index(index=idx, document={"title":title, "content":content})
@@ -26,13 +47,13 @@ def es_get_all_data(idx):
 	es_result = Es_App.search(index=idx, body=query)
 	logger.info('[es_get_all_data] es_result:{}'.format(es_result))
     
-	return to_local_struct(es_result)
+	return to_local_struct_id_title(es_result)
 
 
 # 获取私域知识
 def es_self_knowledge(idx, str):
 	res = ""
-	local_res = es_query(idx, str)
+	local_res = es_query_str(idx, str)
 	for r in local_res:
 		tmp = res + r['title']+'\n'+r['content']+'\n\n'
 		if len(tmp)>1000:
@@ -44,7 +65,7 @@ def es_self_knowledge(idx, str):
 
 
 # 查询数据
-def es_query(idx, str):
+def es_query_str(idx, str):
 	query = {'query': 
 	  {'bool':
     	{'should':
@@ -55,7 +76,16 @@ def es_query(idx, str):
 	  }
 	}
 	es_result = Es_App.search(index=idx, body=query)
-	logger.info('[es_query] query:{}, es_result:{}'.format(str, es_result))
+	logger.info('[es_query_str] query:{}, es_result:{}'.format(str, es_result))
+
+	return to_local_struct(es_result)
+
+
+# 查询数据
+def es_query_id(idx, id):
+	query = {'query': {'match': {'_id': id}}}
+	es_result = Es_App.search(index=idx, body=query)
+	logger.info('[es_query_id] query:{}, es_result:{}'.format(str, es_result))
 
 	return to_local_struct(es_result)
 
@@ -63,6 +93,14 @@ def es_query(idx, str):
 # 转为json字符串
 def to_json_str(items):
 	return json.dumps(items, ensure_ascii=False)
+
+
+# 转为结构体，不含content,score
+def to_local_struct_id_title(es_result):
+	res = []
+	for r in es_result['hits']['hits']:
+		res.append({'id': r['_id'], 'title':r['_source']['title']}) 
+	return res
 
 
 # 转为结构体

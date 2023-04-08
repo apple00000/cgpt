@@ -11,6 +11,7 @@ import xmltodict
 from wechatpy.utils import to_text
 from threading import Thread
 import es
+from wechatpy.replies import TextReply
 
 cache = {}
 system_desc = ""
@@ -47,6 +48,14 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
+    # 被动回复
+    sys_res = es.get_sys_command("index", content)
+    if sys_res!="不是命令":
+        logger.info('系统命令:{}, 返回:{}'.format(content, sys_res))
+        TextReply(sys_res)
+        return ""
+    
+   
     self_knowledge = es.es_self_knowledge("index", content)
 
     t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client))
