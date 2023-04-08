@@ -2,7 +2,7 @@ import es
 
 es.es_get_all_data("index")
 
-es.es_query("index", "上海")
+es.es_self_knowledge("index", "上海")
 # es.es_get_all_data('index')
 
 # from elasticsearch import Elasticsearch

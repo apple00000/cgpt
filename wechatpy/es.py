@@ -29,19 +29,34 @@ def es_get_all_data(idx):
 	return to_local_struct(es_result)
 
 
+# 获取私域知识
+def es_self_knowledge(idx, str):
+	res = ""
+	local_res = es_query(idx, str)
+	for r in local_res:
+		tmp = res + r.title+'\n'+r.content+'\n\n'
+		if len(tmp)>1000:
+			break
+		res = tmp
+	
+	logger.info('[es_self_knowledge] str:{}, res:{}'.format(str, res))
+	return res
+
+
 # 查询数据
 def es_query(idx, str):
 	query = {'query': 
 	  {'bool':
     	{'should':
-      		[{'match': {'title':{'query':str, 'boost':1}}},
+      		[{'match': {'title':{'query':str, 'boost':2}}},
 	 		 {'match': {'content':{'query':str, 'boost':1}}}
 	 		]
 	 	}
 	  }
-	 }
+	}
 	es_result = Es_App.search(index=idx, body=query)
-	print("xxx1", es_result)
+	logger.info('[es_query] query:{}, es_result:{}'.format(str, es_result))
+
 	return to_local_struct(es_result)
 
 
@@ -54,5 +69,5 @@ def to_json_str(items):
 def to_local_struct(es_result):
 	res = []
 	for r in es_result['hits']['hits']:
-		res.append({'id': r['_id'], 'title':r['_source']['title'], 'content':r['_source']['content']}) 
+		res.append({'id': r['_id'], 'score':r['_score'] ,'title':r['_source']['title'], 'content':r['_source']['content']}) 
 	return res

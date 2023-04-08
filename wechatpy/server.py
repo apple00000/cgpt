@@ -47,7 +47,9 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, system_desc, client))
+    self_knowledge = es.es_self_knowledge("index", content)
+
+    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client))
     t.start()
 
     return ""
