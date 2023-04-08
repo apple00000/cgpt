@@ -60,10 +60,10 @@ def sys_command(idx, command):
 			return "模型id不能为空"
 		
 		es_res = es_del_data(idx, command)
-		return "ok"
+		return es_res
 	
 	if command.startswith('&&删除所有模型'):
-		es_res = es_del_all_data(idx, command)
+		es_del_all_data(idx, command)
 		return "ok"
 	
 	return "不是系统命令"
@@ -76,7 +76,11 @@ def es_add_data(idx, title, content):
 
 # 删除知识
 def es_del_data(idx, id):
-	Es_App.delete(index=idx, id=id)
+	try:
+		Es_App.delete(index=idx, id=id)
+		return "ok"
+	except:
+		return "id不存在"
 
 
 # 删除所有知识
