@@ -106,16 +106,13 @@ def add_data():
     content = request.args['content']
     logger.info("[add_data] title:{}, content:{}".format(title, content))
     es.es_add_data("index", title, content)
-    r = es.es_get_all_data("index")
-    return es.to_json_str(r)
+    return "ok"
 
 
 @app.route('/del_all_data', methods=['GET', 'POST'])
 def del_all_data():
     es.es_del_all_data("index")
-    r = es.es_get_all_data("index")
-    print('xxx1', r)
-    return es.to_json_str(r)
+    return "ok"
     
 
 @app.route('/del_data', methods=['GET', 'POST'])
@@ -123,9 +120,10 @@ def del_data():
     pass
 
 
-@app.route('/get_data', methods=['GET', 'POST'])
-def get_data():
-    pass
+@app.route('/get_all_data', methods=['GET', 'POST'])
+def get_all_data():
+    r = es.es_get_all_data("index")
+    return es.to_json_str(r)
 
 
 # 加载公共知识
