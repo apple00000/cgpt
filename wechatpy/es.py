@@ -4,12 +4,18 @@ Es_App = Elasticsearch("http://0.0.0.0:9200")
 
 # 新增知识
 def es_add_data(idx, title, content):
-	Es_App.index(index=idx, document={title:title, content:content})
+	Es_App.index(index=idx, document={"title":title, "content":content})
 
 
 # 删除知识
 def es_del_data(idx, id):
 	Es_App.delete(index=idx, id=id)
+
+
+# 删除所有知识
+def es_del_all_data(idx):
+	query = {'query': {'match_all': {}}}
+	Es_App.delete_by_query(index=idx, body=query)
 
 
 # 获取所有数据

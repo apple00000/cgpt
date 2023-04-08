@@ -109,9 +109,18 @@ def add_data():
     r = es.es_get_all_data("index")
     return es.to_json_str(r)
 
+
+@app.route('/del_all_data', methods=['GET', 'POST'])
+def del_all_data():
+    es.es_del_all_data("index")
+    r = es.es_get_all_data("index")
+    return es.to_json_str(r)
+    
+
 @app.route('/del_data', methods=['GET', 'POST'])
 def del_data():
     pass
+
 
 @app.route('/get_data', methods=['GET', 'POST'])
 def get_data():
