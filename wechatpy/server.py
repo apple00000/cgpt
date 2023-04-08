@@ -105,12 +105,12 @@ def hello_world_2():
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
     title = request.args['title']
+    content = request.args['content']
     if (len(title))>30:
         return ""
     if (len(content))>500:
         return "content不能超过500个字符"
 
-    content = request.args['content']
     logger.info("[add_data] title:{}, content:{}".format(title, content))
     es.es_add_data("index", title, content)
     return "ok"
