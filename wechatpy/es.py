@@ -17,6 +17,6 @@ def get_es_all_data(idx):
 	res = []
 	for r in es_result['hits']['hits']:
 		res.append(EsKnowledge(r['_id'], r['_source']['title'], r['_source']['content'])) 
-	print('xxx', json.dumps(res))     
+	print('xxx', res[0], res[1])     
 	return res
     
