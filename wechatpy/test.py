@@ -1,8 +1,11 @@
 import es
 
-es.es_get_all_data("index")
+a = "#查询所有模型"
+print(a.startswith("#查询所有模型"))
 
-es.es_self_knowledge("index", "上海")
+# es.es_get_all_data("index")
+
+# es.es_self_knowledge("index", "上海")
 # es.es_get_all_data('index')
 
 # from elasticsearch import Elasticsearch
