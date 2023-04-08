@@ -5,9 +5,10 @@ from loguru import logger
 Es_App = Elasticsearch("http://0.0.0.0:9200")
 
 # 被动回复检查
-def get_sys_command(idx, str):
-	if str.startswith('#查询所有模型'):
-		logger.info("[get_sys_command] str:{}".format(str))
+def get_sys_command(idx, command):
+	command = str(command)
+	if command.startswith('#查询所有模型'):
+		logger.info("[get_sys_command] command:{}".format(command))
 		es_res = es_get_all_data(idx)
 		logger.info("[get_sys_command] es_res:{}".format(es_res))
 		res = ""
@@ -15,10 +16,10 @@ def get_sys_command(idx, str):
 			res += r.id + ' ' + r.title + '\n'
 		return res
 
-	if str.startswith('#查询模型'):
-		str = str.removeprefix('查询模型')
-		str = str.strip()
-		es_res = es_query_id(str)
+	if command.startswith('#查询模型'):
+		command = command.removeprefix('查询模型')
+		command = command.strip()
+		es_res = es_query_id(command)
 		res = ""
 		for r in es_res:
 			res += r.id + '\n' + r.title + '\n' + r.content + '\n'
