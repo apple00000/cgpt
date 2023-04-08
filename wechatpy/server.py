@@ -14,6 +14,7 @@ from threading import Thread
 cache = {}
 system_desc = ""
 client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+client_2 = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a')
 
 app = Flask(__name__) #实例化Flask对象app
 
@@ -48,11 +49,50 @@ def hello_world():
     t=Thread(target=get_ai, args=(openid, content, system_desc))
     t.start()
 
-    # try:
-    #     check_signature(token, signature, timestamp, nonce)
-    # except InvalidSignatureException:
-    #     print("xxx3")
-    #     pass
+    return ""
+
+
+@app.route('/wechat_msg_2', methods=['GET', 'POST']) #app中的route装饰器
+def hello_world_2():
+    token = "zpsf01234560123456"
+    signature = request.args['signature']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce']
+    openid = request.args['openid']
+
+    # 验证
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {} {}".format(signature, timestamp, nonce, openid, echostr))
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
+        return echostr
+    except InvalidSignatureException: 
+        logger.info("check fail")    
+        return ""
+    
+    # 去重，微信公众号会发三次
+    if openid+timestamp in cache:
+        logger.info("[cache] {} {}".format(openid, timestamp))
+        return ""
+    cache[openid+timestamp] = True
+
+    raw_data = request.data
+    logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
+
+    msg = parse_message(raw_data)
+    msg = xmltodict.parse(to_text(raw_data))['xml']
+    logger.info("[get_msg] {}".format(msg))
+
+    if msg['MsgType']!='text':
+        logger.info('[msgtype] {}'.format(msg['MsgType']))
+        return ""
+    
+    content = msg['Content']
+    logger.info("[get_msg_content] {}".format(content))
+
+    t=Thread(target=get_ai, args=(openid, content, ""))
+    t.start()
 
     return ""
 
