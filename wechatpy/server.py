@@ -59,11 +59,10 @@ def hello_world_2():
     signature = request.args['signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
-    openid = request.args['openid']
 
     # 验证
     echostr = request.args['echostr']
-    logger.info("[check] {} {} {} {} {}".format(signature, timestamp, nonce, openid, echostr))
+    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
     try:
         check_signature(token, signature, timestamp, nonce)
         logger.info("check ok")
@@ -71,6 +70,8 @@ def hello_world_2():
     except InvalidSignatureException: 
         logger.info("check fail")    
         return ""
+    
+    openid = request.args['openid']
     
     # 去重，微信公众号会发三次
     if openid+timestamp in cache:
