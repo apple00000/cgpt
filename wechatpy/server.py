@@ -114,6 +114,7 @@ def add_data():
 def del_all_data():
     es.es_del_all_data("index")
     r = es.es_get_all_data("index")
+    print('xxx1', r)
     return es.to_json_str(r)
     
 
