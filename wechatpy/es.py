@@ -63,7 +63,7 @@ def sys_command(idx, command):
 		return es_res
 	
 	if command.startswith('&&删除所有模型'):
-		es_del_all_data(idx, command)
+		es_del_all_data(idx)
 		return "ok"
 	
 	return "不是系统命令"
