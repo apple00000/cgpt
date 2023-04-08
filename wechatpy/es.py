@@ -7,6 +7,8 @@ Es_App = Elasticsearch("http://0.0.0.0:9200")
 # 被动回复检查
 def get_sys_command(idx, command):
 	command = str(command)
+	logger.info('get_sys_command... {}'.format(command))
+	
 	if command.startswith('#查询所有模型'):
 		logger.info("[get_sys_command] command:{}".format(command))
 		es_res = es_get_all_data(idx)
