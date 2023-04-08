@@ -34,7 +34,7 @@ def es_self_knowledge(idx, str):
 	res = ""
 	local_res = es_query(idx, str)
 	for r in local_res:
-		tmp = res + r.title+'\n'+r.content+'\n\n'
+		tmp = res + r['title']+'\n'+r['content']+'\n\n'
 		if len(tmp)>1000:
 			break
 		res = tmp
