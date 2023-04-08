@@ -31,7 +31,7 @@ def sys_command(idx, command):
 	if command.startswith('&&查询模型'):
 		command = command.replace('&&查询模型', '')
 		command = command.strip()
-		es_res = es_query_id(command)
+		es_res = es_query_id(idx, command)
 		res = ""
 		for r in es_res:
 			res += r['id'] + '\n' + r['title'] + '\n' + r['content'] + '\n'
