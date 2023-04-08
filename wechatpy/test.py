@@ -1,6 +1,6 @@
 import es
 
-es.get_es_all_data()
+es.get_es_all_data('index')
 
 # from elasticsearch import Elasticsearch
 
