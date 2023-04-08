@@ -27,10 +27,13 @@ def hello_world():
 
     # 验证
     try:
-        check_signature(token, signature, timestamp, nonce)
         echostr = request.args['echostr']
+        logger.info("[check] {} {} {} {} {}".format(signature, timestamp, nonce, openid, echostr))
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
         return echostr
-    except InvalidSignatureException:     
+    except InvalidSignatureException: 
+        logger.info("check fail")    
         return ""
 
     # 去重，微信公众号会发三次
