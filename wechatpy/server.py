@@ -46,7 +46,7 @@ def hello_world():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, system_desc))
+    t=Thread(target=get_ai, args=(openid, content, system_desc, client))
     t.start()
 
     return ""
@@ -93,7 +93,7 @@ def hello_world_2():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, ""))
+    t=Thread(target=get_ai, args=(openid, content, "", client_2))
     t.start()
 
     return ""
@@ -124,7 +124,7 @@ def read_file(path):
 
 
 # 调用openai接口
-def get_ai(openid, content, system_desc):
+def get_ai(openid, content, system_desc, c):
     logger.info("[get_ai] {} {}".format(openid, content))
 
     post_dict = {}
@@ -136,7 +136,7 @@ def get_ai(openid, content, system_desc):
     res = requests.post(url='http://34.28.10.140:10001', data=j)
     logger.info("[ai_res] {}".format(res.text))
 
-    res_code = client.message.send_text(openid, res.text)
+    res_code = c.message.send_text(openid, res.text)
     logger.info("[send_text] {}".format(res_code))
 
 
