@@ -71,8 +71,8 @@ def sys_command(idx, command):
 
 # 新增知识
 def es_add_data(idx, title, content):
-	Es_App.index(index=idx, document={"title":title, "content":content})
-
+	res = Es_App.index(index=idx, document={"title":title, "content":content})
+	logger.info('[es_add_data] res:{}'.format(res))
 
 # 删除知识
 def es_del_data(idx, id):

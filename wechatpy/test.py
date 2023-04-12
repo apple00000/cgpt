@@ -16,13 +16,13 @@ for f in fs:
 		tmp = content[:1000]
 		content = content[1000:]
 
-		print("xxx1", title+"("+str(content_index)+")")
-		print("xxx2", tmp)
+		# print("xxx1", title+"_"+str(content_index))
+		# print("xxx2", tmp)
 		content_index+=1
 		es.es_add_data("index", title, tmp)
 
-	print("xxx1", title+"("+str(content_index)+")")
-	print("xxx2", content)
+	# print("xxx1", title+"_"+str(content_index))
+	# print("xxx2", content)
 	content_index=1
 	es.es_add_data("index", title, content)
 	
