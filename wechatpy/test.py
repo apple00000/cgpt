@@ -1,27 +1,30 @@
 import es
 
-a = '#查询所有模型'
-print(a.startswith('#查询所有模型'))
+file_object = open("刚需探房.txt",'r')
+all_the_text = file_object.read()
+fs = all_the_text.split('\n\n\n')
 
-# es.es_get_all_data("index")
+content_index = 1
+for f in fs:
+	f2s = f.split('\n')
+	if len(f2s)!=4:
+		continue
+	title = f2s[0].replace('【标题】','')
+	content = f2s[3].replace('【内容】','')
 
-# es.es_self_knowledge("index", "上海")
-# es.es_get_all_data('index')
+	while len(content)>1000:
+		tmp = content[:1000]
+		content = content[1000:]
 
-# from elasticsearch import Elasticsearch
+		print("xxx1", title+"("+str(content_index)+")")
+		print("xxx2", tmp)
+		content_index+=1
+		es.es_add_data("index", title, tmp)
 
-# # 默认host为localhost,port为9200.但也可以指定host与port
-# es = Elasticsearch("http://0.0.0.0:9200")
- 
-# # 插入数据,index，doc_type名称可以自定义，id可以根据需求赋值,body为内容
-# es.index(index="index", document={"title":"python2", "content":"上海"})
+	print("xxx1", title+"("+str(content_index)+")")
+	print("xxx2", content)
+	content_index=1
+	es.es_add_data("index", title, content)
+	
 
-# query = {'query': {'match_all': {}}}# 查找所有文档
-# query_name = {'query': {'match': {'content':'深' }}}# 查找所有文档
 
-# result = es.search(index="index", body=query_name)
-# print('result', result)# 返回第一个文档的内容
-
-# query_name_2 = {'query': {'match': {'content':'上' }}}# 查找所有文档
-# result2 = es.search(index="index", body=query_name_2)
-# print('result2', result2)# 返回第一个文档的内容
