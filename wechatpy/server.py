@@ -112,17 +112,17 @@ def hello_world_2():
 
 @app.route('/wechat_msg_qiye', methods=['GET', 'POST']) #app中的route装饰器
 def wechat_msg_qiye():
-    logger.info("wechat_msg_2...")
+    logger.info("wechat_msg_qiye...")
     token = "zpsf01234560123456"
-    signature = request.args['signature']
+    msg_signature = request.args['msg_signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
 
     # 验证
     echostr = request.args['echostr']
-    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    logger.info("[check] {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
     try:
-        check_signature(token, signature, timestamp, nonce)
+        check_signature(token, msg_signature, timestamp, nonce)
         logger.info("check ok")
         return echostr
     except InvalidSignatureException: 
