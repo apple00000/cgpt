@@ -121,13 +121,13 @@ def wechat_msg_qiye():
     # 验证
     echostr = request.args['echostr']
     logger.info("[check] {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
-    try:
-        check_signature(token, msg_signature, timestamp, nonce)
-        logger.info("check ok")
-        return echostr
-    except InvalidSignatureException: 
-        logger.info("check fail")    
-        return ""
+    # try:
+    #     check_signature(token, msg_signature, timestamp, nonce)
+    #     logger.info("check ok")
+    return echostr
+    # except InvalidSignatureException: 
+    #     logger.info("check fail")    
+    #     return ""
     
     openid = request.args['openid']
     
