@@ -109,6 +109,54 @@ def hello_world_2():
     return ""
 
 
+
+@app.route('/wechat_msg_qiye', methods=['GET', 'POST']) #app中的route装饰器
+def wechat_msg_qiye():
+    logger.info("wechat_msg_2...")
+    token = "zpsf01234560123456"
+    signature = request.args['signature']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce']
+
+    # 验证
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
+        return echostr
+    except InvalidSignatureException: 
+        logger.info("check fail")    
+        return ""
+    
+    openid = request.args['openid']
+    
+    # 去重，微信公众号会发三次
+    if openid+timestamp in cache:
+        logger.info("[cache] {} {}".format(openid, timestamp))
+        return ""
+    cache[openid+timestamp] = True
+
+    raw_data = request.data
+    logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
+
+    msg = parse_message(raw_data)
+    msg = xmltodict.parse(to_text(raw_data))['xml']
+    logger.info("[get_msg] {}".format(msg))
+
+    if msg['MsgType']!='text':
+        logger.info('[msgtype] {}'.format(msg['MsgType']))
+        return ""
+    
+    content = msg['Content']
+    logger.info("[get_msg_content] {}".format(content))
+
+    t=Thread(target=get_ai, args=(openid, content, "", client_2))
+    t.start()
+
+    return ""
+
+
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
     title = request.args['title']
