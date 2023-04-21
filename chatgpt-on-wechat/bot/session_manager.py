@@ -24,7 +24,7 @@ class Session(object):
 
     def set_system_prompt(self, system_prompt):
         self.system_prompt = system_prompt
-        self.reset()
+        # self.reset()
 
     def add_query(self, query):
         raise NotImplementedError
