@@ -28,6 +28,29 @@ def hello_world():
     return ""
 
 
+@app.route('/wechat_msg_zpsf', methods=['GET', 'POST']) #app中的route装饰器
+def hello_world_zpsf():
+    logger.info("hello_world_zpsf ...")
+    token = "zpsf01234560123456"
+    signature = request.args['signature']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce']
+
+    # 验证
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
+        return echostr
+    except InvalidSignatureException: 
+        logger.info("check fail")    
+        return ""
+
+    # zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+    return ""
+
+
 # 祖平说房公众号逻辑
 def zupingshuofang(key, value):
     client = WeChatClient(key, value)
