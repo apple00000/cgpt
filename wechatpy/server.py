@@ -87,7 +87,8 @@ def zupingshuofang(key, value):
         send_text(openid, sys_res, client)
         return ""
     
-    self_knowledge = es.es_self_knowledge("index", content)
+    self_knowledge = ""
+    # self_knowledge = es.es_self_knowledge("index", content)
 
     t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client))
     t.start()
