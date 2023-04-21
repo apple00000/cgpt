@@ -1,30 +1,11 @@
-import es
+from WXBizMsgCrypt import WXBizMsgCrypt
+import xml.etree.cElementTree as ET
+import sys
 
-file_object = open("刚需探房.txt",'r')
-all_the_text = file_object.read()
-fs = all_the_text.split('\n\n\n')
+# s = "jIGhgJqWsQmBcIAwFj0YTIX+V1dG/7r362Zmz45FyVmpnOAhmebUKzgBTN/E+oJnEqbunk2p4Xi8vrcfzInScg=="
 
-content_index = 1
-for f in fs:
-	f2s = f.split('\n')
-	if len(f2s)!=4:
-		continue
-	title = f2s[0].replace('【标题】','')
-	content = f2s[3].replace('【内容】','')
+# aes_msg = base64.b64decode(s)
 
-	while len(content)>1000:
-		tmp = content[:1000]
-		content = content[1000:]
+# print(aes_msg)
 
-		# print("xxx1", title+"_"+str(content_index))
-		# print("xxx2", tmp)
-		content_index+=1
-		es.es_add_data("index", title, tmp)
-
-	# print("xxx1", title+"_"+str(content_index))
-	# print("xxx2", content)
-	content_index=1
-	es.es_add_data("index", title, content)
-	
-
-
+# Ak1sk1tdzEaXVvfxuP8pMnCcx81h38pbXAPoMqH5Iuw

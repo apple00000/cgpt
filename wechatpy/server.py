@@ -12,16 +12,26 @@ from wechatpy.utils import to_text
 from threading import Thread
 import es
 from wechatpy.replies import TextReply
+import base64
 
 cache = {}
 system_desc = ""
-client = WeChatClient('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+
+# 测试公众号
 client_2 = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a')
 
 app = Flask(__name__) #实例化Flask对象app
 
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
+    zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+    return ""
+
+
+# 祖平说房公众号逻辑
+def zupingshuofang(key, value):
+    client = WeChatClient(key, value)
+
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
@@ -59,7 +69,6 @@ def hello_world():
     t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client))
     t.start()
 
-    return ""
 
 
 @app.route('/wechat_msg_2', methods=['GET', 'POST']) #app中的route装饰器
@@ -121,6 +130,8 @@ def wechat_msg_qiye():
     # 验证
     echostr = request.args['echostr']
     logger.info("[check] {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
+
+    aes_msg = base64.b64decode(echostr)
     # try:
     #     check_signature(token, msg_signature, timestamp, nonce)
     #     logger.info("check ok")
