@@ -56,6 +56,7 @@ class SessionManager(object):
             self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
         elif system_prompt is not None: # 如果有新的system_prompt，更新并重置session
             self.sessions[session_id].set_system_prompt(system_prompt)
+            self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
         session = self.sessions[session_id]
         return session
     
