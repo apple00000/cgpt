@@ -52,11 +52,14 @@ class SessionManager(object):
             如果session_id不在sessions中，创建一个新的session并添加到sessions中
             如果system_prompt不会空，会更新session的system_prompt并重置session
         '''
+        self.sessions[session_id].set_system_prompt(system_prompt)
+
         if session_id not in self.sessions:
+            logger.info("xxx1 session_id {} init", session_id)
             self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
-        elif system_prompt is not None: # 如果有新的system_prompt，更新并重置session
-            self.sessions[session_id].set_system_prompt(system_prompt)
-            self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
+        # elif system_prompt is not None: # 如果有新的system_prompt，更新并重置session
+            
+        #     self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
         session = self.sessions[session_id]
         return session
     
