@@ -13,6 +13,7 @@ from threading import Thread
 import es
 from wechatpy.replies import TextReply
 import base64
+import qiye_code
 
 cache = {}
 system_desc = ""
@@ -22,12 +23,13 @@ client_2 = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a'
 
 app = Flask(__name__) #实例化Flask对象app
 
+# 祖平说房 测试号
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world():
     zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
     return ""
 
-
+# 祖平说房
 @app.route('/wechat_msg_zpsf', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world_zpsf():
     logger.info("hello_world_zpsf ...")
@@ -94,7 +96,7 @@ def zupingshuofang(key, value):
     t.start()
 
 
-
+# 私有号
 @app.route('/wechat_msg_2', methods=['GET', 'POST']) #app中的route装饰器
 def hello_world_2():
     logger.info("wechat_msg_2...")
@@ -142,27 +144,24 @@ def hello_world_2():
     return ""
 
 
-
+# 祖平说房 企业微信
 @app.route('/wechat_msg_qiye', methods=['GET', 'POST']) #app中的route装饰器
 def wechat_msg_qiye():
     logger.info("wechat_msg_qiye...")
-    token = "zpsf01234560123456"
+    token = "BioALSjOF4fadlywjXj1zWb"
     msg_signature = request.args['msg_signature']
     timestamp = request.args['timestamp']
     nonce = request.args['nonce']
 
     # 验证
     echostr = request.args['echostr']
-    logger.info("[check] {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
+    logger.info("[wechat_msg_qiye] check {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
 
-    aes_msg = base64.b64decode(echostr)
-    # try:
-    #     check_signature(token, msg_signature, timestamp, nonce)
-    #     logger.info("check ok")
-    return echostr
-    # except InvalidSignatureException: 
-    #     logger.info("check fail")    
-    #     return ""
+    msg = qiye_code.de_echostr(echostr)
+    logger.info("[wechat_msg_qiye] msg {} {}".format(msg, str(msg)))
+
+    return ""
+
     
     openid = request.args['openid']
     
