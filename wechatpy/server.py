@@ -98,7 +98,7 @@ def zupingshuofang(key, value):
     # 推荐附加
     rec = recommend.match_product(content)
 
-    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client+"\n\n"+rec))
+    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, "\n\n"+rec))
     t.start()
 
 
