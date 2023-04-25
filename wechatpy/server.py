@@ -14,6 +14,8 @@ import es
 from wechatpy.replies import TextReply
 import base64
 import qiye_code
+import utils
+import recommend
 
 cache = {}
 system_desc = ""
@@ -28,6 +30,7 @@ app = Flask(__name__) #实例化Flask对象app
 def hello_world():
     zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
     return ""
+
 
 # 祖平说房
 @app.route('/wechat_msg_zpsf', methods=['GET', 'POST']) #app中的route装饰器
@@ -92,7 +95,10 @@ def zupingshuofang(key, value):
     self_knowledge = ""
     # self_knowledge = es.es_self_knowledge("index", content)
 
-    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client))
+    # 推荐附加
+    rec = recommend.match_product(content)
+
+    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client+"\n\n"+rec))
     t.start()
 
 
@@ -138,7 +144,7 @@ def hello_world_2():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, "", client_2))
+    t=Thread(target=get_ai, args=(openid, content, "", client_2, ""))
     t.start()
 
     return ""
@@ -185,7 +191,7 @@ def wechat_msg_qiye():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, "", client_2))
+    t=Thread(target=get_ai, args=(openid, content, "", client_2, ""))
     t.start()
 
     return ""
@@ -233,16 +239,12 @@ def get_all_data():
 # 加载公共知识
 def load_system_desc():
     global system_desc
-    system_desc = read_file("./system_desc.txt")
+    system_desc = utils.read_file("./system_desc.txt")
     print("[load_system_desc] ", system_desc)
-
-def read_file(path):
-    with open(path, mode='r', encoding='utf-8') as f:
-        return f.read()
 
 
 # 调用openai接口
-def get_ai(openid, content, system_desc, c):
+def get_ai(openid, content, system_desc, c, add_text):
     logger.info("[get_ai] {} {}".format(openid, content))
 
     post_dict = {}
@@ -254,7 +256,7 @@ def get_ai(openid, content, system_desc, c):
     res = requests.post(url='http://34.28.10.140:10001', data=j)
     logger.info("[ai_res] {}".format(res.text))
 
-    res_code = c.message.send_text(openid, res.text)
+    res_code = c.message.send_text(openid, res.text+add_text)
     logger.info("[send_text] {}".format(res_code))
 
 
@@ -265,6 +267,7 @@ def send_text(openid, content, c):
 
 if __name__ == '__main__':  
     load_system_desc()
+    recommend.load_recommend_file()
 
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
     logger.info("server start...")
