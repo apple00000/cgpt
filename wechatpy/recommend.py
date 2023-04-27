@@ -45,7 +45,7 @@ def match_product(s):
 	if len(res)==0:
 		return ""
 
-	data += "回答内容需要包含引导用户购买以下商品：\n"
+	data += "推荐购买以下商品：\n"
 	index = 1
 	for r in res:
 		item = str(index)+'）'+r['title']+'   '+r['price']+'元   '+r['url']+'   '+r['detail']
