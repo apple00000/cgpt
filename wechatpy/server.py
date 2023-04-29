@@ -86,6 +86,8 @@ def zupingshuofang(key, value):
         content = msg['Content']
         logger.info("[get_msg_content] {}".format(content))
 
+        zfsp_auto_reply(client, openid, content)
+
         # 系统命令
         if es.is_sys_command(content):
             sys_res = es.sys_command("index", content)
@@ -117,7 +119,12 @@ def zupingshuofang(key, value):
         logger.info('[msgtype] {}'.format(msg['MsgType']))
         return ""
     
-    
+
+# 祖平说房自动回复 
+def zfsp_auto_reply(client, openid, str):
+    if '人才房' in str:
+        res_code = client.message.send_text(openid, 'https://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247487860&idx=1&sn=57c2965aa48c13625f22527c90bea25a&chksm=eaeb13ccdd9c9adadbb6a51cb977349b711ab99fb39c51258b8960d751a7fecdcdbc90641697&token=1846401951&lang=zh_CN#rd')
+        logger.info("[send_text] text {}".format(res_code))
 
 
 # 私有号
