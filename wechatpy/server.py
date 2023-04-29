@@ -79,28 +79,45 @@ def zupingshuofang(key, value):
     msg = xmltodict.parse(to_text(raw_data))['xml']
     logger.info("[get_msg] {}".format(msg))
 
-    if msg['MsgType']!='text':
+    msgType = msg['MsgType']
+    
+    # 文字
+    if msgType == 'text':
+        content = msg['Content']
+        logger.info("[get_msg_content] {}".format(content))
+
+        # 系统命令
+        if es.is_sys_command(content):
+            sys_res = es.sys_command("index", content)
+            send_text(openid, sys_res, client)
+            return ""
+        
+        self_knowledge = ""
+        # self_knowledge = es.es_self_knowledge("index", content)
+
+        # 推荐附加
+        rec = recommend.match_product(content)
+        logger.info("match_product {}".format(rec))
+
+        t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, '\n\n'+rec))
+        t.start()
+
+    # 事件
+    elif msgType == 'event':
+        event = msg['Event']
+        # 关注
+        if event == 'subscribe':
+            s = '您好，感谢您的关注与支持！【祖平说房】,专注家庭房产配置，为您提供一站式房产配置顾问服务。\n您可直接在对话框输入内容，我们智能助手 将24小时为您提供线上服务。\n如果您有需要预约祖平老师线下咨询，请识别二维码或直接添加微信：18960709019'
+            res_code = client.message.send_text(openid, s)
+            logger.info("[send_text] text {}".format(res_code))
+            res_code = client.message.send_image(openid, 'PFrQoA4lwFQr5sLE_F4HjBermVpDQ4GqoeqghzeD6plj7lp1XfqQmvEgDpG_hJyO')
+            logger.info("[send_text] image {}".format(res_code))
+
+    else:
         logger.info('[msgtype] {}'.format(msg['MsgType']))
         return ""
     
-    content = msg['Content']
-    logger.info("[get_msg_content] {}".format(content))
-
-    # 系统命令
-    if es.is_sys_command(content):
-        sys_res = es.sys_command("index", content)
-        send_text(openid, sys_res, client)
-        return ""
     
-    self_knowledge = ""
-    # self_knowledge = es.es_self_knowledge("index", content)
-
-    # 推荐附加
-    rec = recommend.match_product(content)
-    logger.info("match_product {}".format(rec))
-
-    t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, '\n\n'+rec))
-    t.start()
 
 
 # 私有号
