@@ -101,7 +101,7 @@ def zupingshuofang(key, value):
         rec = recommend.match_product(content)
         logger.info("match_product {}".format(rec))
 
-        t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, '\n\n'+rec))
+        t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, '\n'+rec))
         t.start()
 
     # 事件
