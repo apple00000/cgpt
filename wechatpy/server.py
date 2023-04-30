@@ -16,6 +16,7 @@ import base64
 import qiye_code
 import utils
 import recommend
+import time
 
 cache = {}
 system_desc = ""
