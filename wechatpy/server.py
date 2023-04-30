@@ -124,7 +124,31 @@ def zupingshuofang(key, value):
 # 祖平说房自动回复 
 def zfsp_auto_reply(client, openid, str):
     if '人才房' in str:
-        res_code = client.message.send_text(openid, 'https://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247487860&idx=1&sn=57c2965aa48c13625f22527c90bea25a&chksm=eaeb13ccdd9c9adadbb6a51cb977349b711ab99fb39c51258b8960d751a7fecdcdbc90641697&token=1846401951&lang=zh_CN#rd')
+        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【重磅！福州发放政策“大礼包”！涉及公租房、人才住房……】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247487860&idx=1&sn=57c2965aa48c13625f22527c90bea25a&chksm=eaeb13ccdd9c9adadbb6a51cb977349b711ab99fb39c51258b8960d751a7fecdcdbc90641697&token=1846401951&lang=zh_CN#rd')
+        logger.info("[send_text] text {}".format(res_code))
+
+    if '地铁' in str:
+        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【提前谋划6条线路，福州最新地铁建设规划曝光】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247488076&idx=1&sn=ebd805fbd63705f2426c436a5c544138&chksm=eaeb10f4dd9c99e25b5cf8422bca034287c356d6b1dec17ee2baa7e16e826245948320380d9c&token=1846401951&lang=zh_CN#rd')
+        logger.info("[send_text] text {}".format(res_code))
+
+    if '落户' in str:
+        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【福州落户最全指南，拿走不谢】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247484588&idx=1&sn=ba3baaaeb63599f64dda66dc7998c89c&chksm=eaeb0614dd9c8f022a45e00a1197b8f14cfb855c3e0d1da68e592166eb699244243f072b70c7&token=1846401951&lang=zh_CN#rd')
+        logger.info("[send_text] text {}".format(res_code))
+
+    if '税收' in str:
+        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【怎么判定名下房产套数？买卖房屋需缴纳多少税费？福州房产交易最全指南】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247486998&idx=1&sn=21a942d77ec508281e23ca3bd8861e5f&chksm=eaeb0caedd9c85b8b5d2575626424b4f52c4543022f3d333a7520e2f3833f8a404595222a0f4&token=1846401951&lang=zh_CN#rd')
+        logger.info("[send_text] text {}".format(res_code))
+
+    if '直播' in str:
+        res_code = client.message.send_text(openid, '【直播】\n福州楼市政策，搜索抖音号：福州祖平说房；\n楼市干货直播，每周二、四晚9-12点\n1.搜索抖音号：福州祖平说房【直播号丨佑居】\n2.点击链接：https://apptwzlpzwb4621.h5.xiaoeknow.com')
+        logger.info("[send_text] text {}".format(res_code))
+
+    if '微信' in str:
+        res_code = client.message.send_image(openid, 'PFrQoA4lwFQr5sLE_F4HjBermVpDQ4GqoeqghzeD6plj7lp1XfqQmvEgDpG_hJyO')
+        logger.info("[send_text] image {}".format(res_code))
+
+    if '地图' in str:
+        res_code = client.message.send_text(openid, '【福州楼市地图】点击下方链接即可领取\nhttps://apptwzlpzwb4621.h5.xiaoeknow.com/p/course/text/i_61518c0fe4b0448bf65ddf09')
         logger.info("[send_text] text {}".format(res_code))
 
 
