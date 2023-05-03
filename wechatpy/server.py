@@ -91,7 +91,7 @@ def zupingshuofang(key, value):
 
         # 菜单消息
         if content=='你好':
-            d = {"head_content": "可以点击提问：", "list":[{"id":"101", "content":"祖平说房提供什么服务？"}]}
+            d = {"head_content": "可以点击提问：", "list":[{"id":"101", "content":"祖平说房提供什么服务？"}], "tail_content":""}
             res_code = client.message.send_msg_menu(openid, d)
             return ''
 
@@ -101,7 +101,8 @@ def zupingshuofang(key, value):
             sys_res = es.sys_command("index", content)
             send_text(openid, sys_res, client)
             return ""
-        
+
+
         self_knowledge = ""
         # self_knowledge = es.es_self_knowledge("index", content)
 
