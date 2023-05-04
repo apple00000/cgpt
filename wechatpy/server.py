@@ -121,7 +121,7 @@ def zupingshuofang(key, value):
             s = '您好，感谢您的关注与支持！【祖平说房】,专注家庭房产配置，为您提供一站式房产配置顾问服务。\n您可直接在对话框输入内容，我们智能助手 将24小时为您提供线上服务。\n如果您有需要预约祖平老师线下咨询，请识别二维码或直接添加微信：18960709019'
             res_code = client.message.send_text(openid, s)
             logger.info("[send_text] text {}".format(res_code))
-            res_code = client.message.send_image(openid, 'PFrQoA4lwFQr5sLE_F4HjBermVpDQ4GqoeqghzeD6plj7lp1XfqQmvEgDpG_hJyO')
+            res_code = client.message.send_image(openid, 'PFrQoA4lwFQr5sLE_F4HjEqP13GQwNOh6SswuzYqt3389S2r6GwpM0ZjeITtUSeX')
             logger.info("[send_text] image {}".format(res_code))
 
     else:
