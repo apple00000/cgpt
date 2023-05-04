@@ -10,13 +10,13 @@ from loguru import logger
 import xmltodict
 from wechatpy.utils import to_text
 from threading import Thread
-import es
-from wechatpy.replies import TextReply
-import base64
-import qiye_code
-import utils
-import recommend
-import time
+# import es
+# from wechatpy.replies import TextReply
+# import base64
+# import qiye_code
+# import utils
+# import recommend
+# import time
 
 cache = {}
 system_desc = ""
