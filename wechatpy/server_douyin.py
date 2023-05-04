@@ -43,7 +43,7 @@ def douyin_airen():
 
 
 if __name__ == '__main__':  
-    server = pywsgi.WSGIServer(('0.0.0.0', 443), {"ssl_context": 'adhoc'}, app)
+    server = pywsgi.WSGIServer(('0.0.0.0', 443), app, None, "default", "default", "defalut",None,None,{"ssl_context": 'adhoc'} )
     logger.info("server start...")
     server.serve_forever()
     # app.run('0.0.0.0', debug=True, port=443, ssl_context='adhoc')
