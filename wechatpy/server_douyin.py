@@ -43,7 +43,7 @@ def douyin_airen():
 
 
 if __name__ == '__main__':  
-    server = pywsgi.WSGIServer(('0.0.0.0', 443), app, None, "default", "default", "defalut",None,None, ssl_context=('server.crt', 'server.key'))
-    logger.info("server start...")
-    server.serve_forever()
-    # app.run(host="0.0.0.0", port=443, ssl_context=('server.crt', 'server.key'))
+    # server = pywsgi.WSGIServer(('0.0.0.0', 443), app, None, "default", "default", "defalut",None,None, ssl_context=('server.crt', 'server.key'))
+    # logger.info("server start...")
+    # server.serve_forever()
+    app.run(host='0.0.0.0', port=443, ssl_context=('server.crt', 'server.key'))
