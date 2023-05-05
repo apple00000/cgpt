@@ -17,6 +17,8 @@ from threading import Thread
 # import utils
 # import recommend
 # import time
+import http.server, ssl
+
 
 cache = {}
 system_desc = ""
@@ -43,7 +45,15 @@ def douyin_airen():
 
 
 if __name__ == '__main__':  
-    server = pywsgi.WSGIServer(('0.0.0.0', 443),app,keyfile='server.key',certfile='server.crt')
-    logger.info("server start...")
-    server.serve_forever()
+    # server = pywsgi.WSGIServer(('0.0.0.0', 443),app,keyfile='server.key',certfile='server.crt')
+    # logger.info("server start...")
+    # server.serve_forever()
     # app.run(host='0.0.0.0', port=443, ssl_context=('server.crt', 'server.key'))
+    server_address = ('0.0.0.0', 443)
+    httpd = http.server.HTTPServer(server_address, http.server.SimpleHTTPRequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket,
+                                server_side=True,
+                                certfile='cert.pem',
+                                keyfile="key.pem",
+                                ssl_version=ssl.PROTOCOL_TLSv1)
+    httpd.serve_forever()
