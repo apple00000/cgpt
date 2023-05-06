@@ -28,7 +28,8 @@ app = Flask(__name__) #实例化Flask对象app
 
 # 马上创业网
 @app.route('/wechat_msg_mscy', methods=['GET', 'POST']) #app中的route装饰器
-def mscy():    
+def mscy():
+    logger.info("[mscy]")   
     mscy_do('wx441ba4af1d1bd7a2', '7a89077ec1eeb33047f512b5df3165de')
     return ""
 
