@@ -33,6 +33,7 @@ def mscy():
     mscy_do('wx441ba4af1d1bd7a2', '7a89077ec1eeb33047f512b5df3165de')
     return ""
 
+
 def mscy_do(key, value):
     client = WeChatClient(key, value)
     token = "zpsf01234560123456"
@@ -63,6 +64,19 @@ def mscy_do(key, value):
 
         t=Thread(target=get_ai, args=(openid, content, "", "1", client, ""))
         t.start()
+
+    elif msgType == 'event':
+        event = msg['Event']
+        # 关注
+        if event == 'subscribe':
+            s = '🤝嗨~终于等到你啦，不胜欢喜。\🤝在时间的长河里，我们一起聊聊创业的那些事~\n🤝详细咨询，还请添加微信19370591602了解呢😊'
+            res_code = client.message.send_text(openid, s)
+            logger.info("[send_text] text {}".format(res_code))
+
+    else:
+        logger.info('[msgtype] {}'.format(msg['MsgType']))
+        return ""
+
 
 
 # 祖平说房 测试号
