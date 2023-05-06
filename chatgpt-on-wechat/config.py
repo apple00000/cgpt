@@ -8,6 +8,12 @@ from common.log import logger
 available_setting ={
     #openai api配置
     "open_ai_api_key": "", # openai api key
+    "open_ai_api_key_1": "",
+    "open_ai_api_key_2": "",
+    "open_ai_api_key_3": "",
+    "open_ai_api_key_4": "",
+    "open_ai_api_key_5": "",
+    "open_ai_api_key_6": "",
     "open_ai_api_base": "https://api.openai.com/v1", # openai apibase，当use_azure_chatgpt为true时，需要设置对应的api base
     "proxy": "", # openai使用的代理
     "model": "gpt-3.5-turbo", # chatgpt模型， 当use_azure_chatgpt为true时，其名称为Azure上model deployment名称
