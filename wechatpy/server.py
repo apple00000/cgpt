@@ -129,7 +129,7 @@ def zupingshuofang(key, value):
         # self_knowledge = es.es_self_knowledge("index", content)
 
         # 推荐附加
-        rec = recommend.match_product(content)
+        rec = recommend.match_product(content, recommend.zpsf_recommend_info)
         if rec!='':
             rec = '\n'+rec
         logger.info("match_product {}".format(rec))
