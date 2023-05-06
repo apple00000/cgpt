@@ -19,12 +19,34 @@ import recommend
 import time
 
 cache = {}
-system_desc = ""
+zpsf_system_desc = ""
 
 # 测试公众号
 client_2 = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a')
 
 app = Flask(__name__) #实例化Flask对象app
+
+# 马上创业网
+@app.route('/wechat_msg_mscy', methods=['GET', 'POST']) #app中的route装饰器
+def mscy():
+    # 验证服务器配置
+    token = "zpsf01234560123456"
+    signature = request.args['signature']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce'] 
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
+        return echostr
+    except InvalidSignatureException: 
+        logger.info("check fail")    
+        return ""
+    
+    # zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
+    return ""
+
 
 # 祖平说房 测试号
 @app.route('/wechat_msg', methods=['GET', 'POST']) #app中的route装饰器
@@ -108,9 +130,11 @@ def zupingshuofang(key, value):
 
         # 推荐附加
         rec = recommend.match_product(content)
+        if rec!='':
+            rec = '\n'+rec
         logger.info("match_product {}".format(rec))
 
-        t=Thread(target=get_ai, args=(openid, content, system_desc+'\n'+self_knowledge, client, '\n'+rec))
+        t=Thread(target=get_ai, args=(openid, content, zpsf_system_desc+'\n'+self_knowledge, "", client, '\n'+rec))
         t.start()
 
     # 事件
@@ -202,7 +226,7 @@ def hello_world_2():
     content = msg['Content']
     logger.info("[get_msg_content] {}".format(content))
 
-    t=Thread(target=get_ai, args=(openid, content, "", client_2, ""))
+    t=Thread(target=get_ai, args=(openid, content, "", "", client_2, ""))
     t.start()
 
     return ""
@@ -225,35 +249,6 @@ def wechat_msg_qiye():
     logger.info("[wechat_msg_qiye] msg {} {}".format(msg, str(msg)))
 
     return ""
-
-    
-    openid = request.args['openid']
-    
-    # 去重，微信公众号会发三次
-    if openid+timestamp in cache:
-        logger.info("[cache] {} {}".format(openid, timestamp))
-        return ""
-    cache[openid+timestamp] = True
-
-    raw_data = request.data
-    logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
-
-    msg = parse_message(raw_data)
-    msg = xmltodict.parse(to_text(raw_data))['xml']
-    logger.info("[get_msg] {}".format(msg))
-
-    if msg['MsgType']!='text':
-        logger.info('[msgtype] {}'.format(msg['MsgType']))
-        return ""
-    
-    content = msg['Content']
-    logger.info("[get_msg_content] {}".format(content))
-
-    t=Thread(target=get_ai, args=(openid, content, "", client_2, ""))
-    t.start()
-
-    return ""
-
 
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
@@ -296,21 +291,20 @@ def get_all_data():
 
 # 加载公共知识
 def load_system_desc():
-    global system_desc
-    system_desc = utils.read_file("./system_desc.txt")
-    print("[load_system_desc] ", system_desc)
+    global zpsf_system_desc
+    zpsf_system_desc = utils.read_file("./zpsf_system_desc.txt")
+    logger.info("[zpsf_system_desc] {}".format(zpsf_system_desc))
 
 
 # 调用openai接口
-def get_ai(openid, content, system_desc, c, add_text):
+def get_ai(openid, content, system_desc, server, c, add_text):
     logger.info("[get_ai] {} {}".format(openid, content))
 
     post_dict = {}
     post_dict["session"] = openid
     post_dict["query"] = content
     post_dict["system"] = system_desc
-
-    logger.info("system_desc : {}".format(system_desc))
+    post_dict["server"] = server
 
     j = json.dumps(post_dict)
 
@@ -328,7 +322,9 @@ def send_text(openid, content, c):
 
 if __name__ == '__main__':  
     load_system_desc()
-    recommend.load_recommend_file()
+
+    # 加载推荐列表
+    recommend.load_recommend_file("./福州购房宝典.txt", recommend.zpsf_recommend_info)
 
     server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
     logger.info("server start...")
