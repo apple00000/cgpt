@@ -28,24 +28,40 @@ app = Flask(__name__) #实例化Flask对象app
 
 # 马上创业网
 @app.route('/wechat_msg_mscy', methods=['GET', 'POST']) #app中的route装饰器
-def mscy():
-    # 验证服务器配置
+def mscy():    
+    mscy_do('wx441ba4af1d1bd7a2', '7a89077ec1eeb33047f512b5df3165de')
+    return ""
+
+def mscy_do(key, value):
+    client = WeChatClient(key, value)
     token = "zpsf01234560123456"
     signature = request.args['signature']
     timestamp = request.args['timestamp']
-    nonce = request.args['nonce'] 
-    echostr = request.args['echostr']
-    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
-    try:
-        check_signature(token, signature, timestamp, nonce)
-        logger.info("check ok")
-        return echostr
-    except InvalidSignatureException: 
-        logger.info("check fail")    
+    nonce = request.args['nonce']
+    openid = request.args['openid']
+
+    # 去重，微信公众号会发三次
+    if openid+timestamp in cache:
+        logger.info("[cache] {} {}".format(openid, timestamp))
         return ""
+    cache[openid+timestamp] = True
+
+    raw_data = request.data
+    logger.info("[get_user] {} {} {} {} {}".format(signature, timestamp, nonce, openid, raw_data))
+
+    msg = parse_message(raw_data)
+    msg = xmltodict.parse(to_text(raw_data))['xml']
+    logger.info("[get_msg] {}".format(msg))
+
+    msgType = msg['MsgType']
     
-    # zupingshuofang('wx02ebfbc6b41b8693', '56cedd8e54f1c184b15f57bbb4344928')
-    return ""
+    # 文字
+    if msgType == 'text':
+        content = msg['Content']
+        logger.info("[get_msg_content] {}".format(content))
+
+        t=Thread(target=get_ai, args=(openid, content, "", "1", client, ""))
+        t.start()
 
 
 # 祖平说房 测试号
