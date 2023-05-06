@@ -16,16 +16,16 @@ def hello_world():
     session = j['session']
     query = j['query']
     system = j['system']
-    # server = j['server']
+    server = j['server']
 
-    # logger.info("[hello_world] session {}, query {}, system {}, server {}".format(session, query, system, server))
+    logger.info("[hello_world] session {}, query {}, system {}, server {}".format(session, query, system, server))
 
     # 根据不同服务重置key
-    # if server=='' or server=='0' or server==None:
-    #     openai.api_key = config.conf().get('open_ai_api_key')
-    # if server=='1':
-    #     openai.api_key = config.conf().get('open_ai_api_key_1')
-
+    if server=='' or server=='0' or server==None:
+        openai.api_key = config.conf().get('open_ai_api_key')
+    if server=='1':
+        openai.api_key = config.conf().get('open_ai_api_key_1')
+        
     logger.info("api_key {}".format(openai.api_key))
 
     bot_context['session_id'] = session
