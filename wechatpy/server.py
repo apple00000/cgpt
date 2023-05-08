@@ -352,9 +352,15 @@ def get_ai(openid, content, system_desc, server, c, add_text):
     res = requests.post(url='http://34.28.10.140:10001', data=j)
     logger.info("[ai_res] {}".format(res.text))
 
-    res_code = c.message.send_text(openid, res.text+add_text)
-    logger.info("[send_text] {}".format(res_code))
-
+    if len(res.text+add_text)<=280:
+        res_code = c.message.send_text(openid, res.text+add_text)
+        logger.info("[send_text] {}".format(res_code))
+    else:
+        res_code = c.message.send_text(openid, res.text)
+        logger.info("[send_text] {}".format(res_code))
+        if add_text!='':
+            res_code = c.message.send_text(openid, add_text.strip())
+            logger.info("[send_text] add_text {}".format(res_code))
 
 # 主动发送消息
 def send_text(openid, content, c):
