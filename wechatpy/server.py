@@ -67,8 +67,9 @@ def mscy_do(key, value):
 
         self_knowledge = ""
         self_knowledge = es.es_self_knowledge("2", content)
+        self_knowledge = '\n\n以下是关于"马上创业网"的业务资料（用于回答用户问题的提问）：\n'
 
-        t=Thread(target=get_ai, args=(openid, content, mscy_system_desc+'\n'+self_knowledge, "1", client, ""))
+        t=Thread(target=get_ai, args=(openid, content, mscy_system_desc+self_knowledge, "1", client, ""))
         t.start()
 
     elif msgType == 'event':
