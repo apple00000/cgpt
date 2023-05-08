@@ -60,7 +60,10 @@ class SessionManager(object):
             
         #     self.sessions[session_id] = self.sessioncls(session_id, system_prompt, **self.session_args)
         
+        logger.info("xxx2 {}".format(system_prompt))
         self.sessions[session_id].set_system_prompt(system_prompt)
+
+        logger.info("xxx3 {}".format(self.sessions[session_id]))
 
         session = self.sessions[session_id]
         return session

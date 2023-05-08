@@ -50,8 +50,6 @@ class ChatGPTBot(Bot,OpenAIImage):
 
             session = self.sessions.session_query_with_prompt(query, session_id, sys)
             
-            logger.info("[OPEN_AI] session query={}".format(session.messages))
-
             reply_content = self.reply_text(session, session_id, 0)
             logger.info("[OPEN_AI] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(session.messages, session_id, reply_content["content"], reply_content["completion_tokens"]))
             if reply_content['completion_tokens'] == 0 and len(reply_content['content']) > 0:
