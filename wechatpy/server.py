@@ -66,7 +66,7 @@ def mscy_do(key, value):
         logger.info("[get_msg_content] {}".format(content))
 
         tmp = es.es_self_knowledge("2", content)
-        self_knowledge = '\n\n以下是关于"马上创业网"的业务资料（用于回答用户问题的提问）：\n' + tmp
+        self_knowledge = '\n\n【马上创业网】问答资料：\n' + tmp
 
         t=Thread(target=get_ai, args=(openid, content, mscy_system_desc+self_knowledge, "1", client, ""))
         t.start()
