@@ -19,7 +19,10 @@ import recommend
 import time
 
 cache = {}
+
+# 系统描述
 zpsf_system_desc = ""
+mscy_system_desc = ""
 
 # 测试公众号
 client_2 = WeChatClient('wx9789602164af57fd', '704b040fe51a750af281d9f39a8fd88a')
@@ -62,7 +65,10 @@ def mscy_do(key, value):
         content = msg['Content']
         logger.info("[get_msg_content] {}".format(content))
 
-        t=Thread(target=get_ai, args=(openid, content, "", "1", client, ""))
+        self_knowledge = ""
+        self_knowledge = es.es_self_knowledge("2", content)
+
+        t=Thread(target=get_ai, args=(openid, content, mscy_system_desc+'\n'+self_knowledge, "1", client, ""))
         t.start()
 
     elif msgType == 'event':
@@ -323,8 +329,12 @@ def get_all_data():
 # 加载公共知识
 def load_system_desc():
     global zpsf_system_desc
+    global mscy_system_desc
     zpsf_system_desc = utils.read_file("./zpsf_system_desc.txt")
     logger.info("[zpsf_system_desc] {}".format(zpsf_system_desc))
+
+    mscy_system_desc = utils.read_file("./mscy_system_desc.txt")
+    logger.info("[mscy_system_desc] {}".format(mscy_system_desc))
 
 
 # 调用openai接口
