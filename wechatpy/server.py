@@ -157,13 +157,13 @@ def zupingshuofang(key, value):
 
         # 系统命令
         if es.is_sys_command(content):
-            sys_res = es.sys_command("index", content)
+            sys_res = es.sys_command("1", content)
             send_text(openid, sys_res, client)
             return ""
 
 
         self_knowledge = ""
-        # self_knowledge = es.es_self_knowledge("index", content)
+        self_knowledge = es.es_self_knowledge("1", content)
 
         # 推荐附加
         rec = recommend.match_product(content, recommend.zpsf_recommend_info)
@@ -297,14 +297,14 @@ def add_data():
         return "content不能超过500个字符"
 
     logger.info("[add_data] title:{}, content:{}".format(title, content))
-    es.es_add_data("index", title, content)
+    es.es_add_data("1", title, content)
     return "ok"
 
 
 @app.route('/del_all_data', methods=['GET', 'POST'])
 def del_all_data():
     logger.info("[del_all_data]")
-    es.es_del_all_data("index")
+    es.es_del_all_data("1")
     return "ok"
     
 
@@ -313,7 +313,7 @@ def del_data():
     id = request.args['id']
     logger.info("[del_data] id:{}".format(id))
     try:
-        es.es_del_data("index", id)
+        es.es_del_data("1", id)
     except:
         return "未删除成功"
     return "ok"
@@ -322,7 +322,7 @@ def del_data():
 @app.route('/get_all_data', methods=['GET', 'POST'])
 def get_all_data():
     logger.info("[get_all_data]")
-    r = es.es_get_all_data("index")
+    r = es.es_get_all_data("1")
     return es.to_json_str(r)
 
 
