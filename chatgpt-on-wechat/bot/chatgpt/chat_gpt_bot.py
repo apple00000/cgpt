@@ -50,7 +50,7 @@ class ChatGPTBot(Bot,OpenAIImage):
 
             session = self.sessions.session_query_with_prompt(query, session_id, sys)
             
-            # 重置message
+            # 重置message，手动写prompt
             session.messages[0]['content'] = sys
 
             reply_content = self.reply_text(session, session_id, 0)
