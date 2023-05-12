@@ -79,6 +79,13 @@ def mscy_do(key, value):
             res_code = client.message.send_text(openid, s)
             logger.info("[send_text] text {}".format(res_code))
 
+        # 点击
+        if str(event).lower() == 'click':
+            event_key = msg['EventKey']
+            if event_key == 'mscy_001':
+                s = '官方网站：www.mscye.com\n客服微信：mscye3888\n客服手机：18930759209\n座机热线：021-58390061'
+                client.message.send_text(openid, s)
+
     else:
         logger.info('[msgtype] {}'.format(msg['MsgType']))
         return ""
