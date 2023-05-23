@@ -294,9 +294,10 @@ def wechat_msg_qiye():
     # return msg
 
     raw_data = request.data
+    logger.info("[raw_data] {}".format(raw_data))
     msg = parse_message(raw_data)
     msg = xmltodict.parse(to_text(raw_data))['xml']
-    logger.info("[get_msg] {}, {}".format(raw_data, msg))
+    logger.info("[get_msg] {}".format(msg))
     return ""
 
 
