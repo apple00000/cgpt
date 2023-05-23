@@ -301,6 +301,9 @@ def wechat_msg_qiye():
     msg_encrypt = root.find('Encrypt').text
     logger.info("[msg_encrypt] {}".format(msg_encrypt))
 
+    msg = qiye_code.de_echostr(msg_encrypt)
+    logger.info("[msg] {}".format(msg))
+
     # msg = parse_message(raw_data)
     # msg = xmltodict.parse(to_text(raw_data))['xml']
     # logger.info("[get_msg] {}".format(msg))
