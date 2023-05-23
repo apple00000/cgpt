@@ -280,19 +280,25 @@ def hello_world_2():
 @app.route('/wechat_msg_qiye', methods=['GET', 'POST']) #app中的route装饰器
 def wechat_msg_qiye():
     logger.info("wechat_msg_qiye...")
-    token = "BioALSjOF4fadlywjXj1zWb"
-    msg_signature = request.args['msg_signature']
-    timestamp = request.args['timestamp']
-    nonce = request.args['nonce']
-
     # 验证
-    echostr = request.args['echostr']
-    logger.info("[wechat_msg_qiye] check {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
+    # token = "BioALSjOF4fadlywjXj1zWb"
+    # msg_signature = request.args['msg_signature']
+    # timestamp = request.args['timestamp']
+    # nonce = request.args['nonce']
+    # echostr = request.args['echostr']
+    # logger.info("[wechat_msg_qiye] check {} {} {} {}".format(msg_signature, timestamp, nonce, echostr))
 
-    msg = qiye_code.de_echostr(echostr)
-    logger.info("[wechat_msg_qiye] msg {} {}".format(msg, str(msg)))
+    # msg = qiye_code.de_echostr(echostr)
+    # logger.info("[wechat_msg_qiye] msg {} {}".format(msg, str(msg)))
 
-    return msg
+    # return msg
+
+    raw_data = request.data
+    msg = parse_message(raw_data)
+    msg = xmltodict.parse(to_text(raw_data))['xml']
+    logger.info("[get_msg] {}, {}".format(raw_data, msg))
+    return ""
+
 
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
