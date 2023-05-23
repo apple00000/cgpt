@@ -17,6 +17,7 @@ import qiye_code
 import utils
 import recommend
 import time
+import xml.etree.ElementTree as ET
 
 cache = {}
 
@@ -295,9 +296,14 @@ def wechat_msg_qiye():
 
     raw_data = request.data
     logger.info("[raw_data] {}".format(raw_data))
-    msg = parse_message(raw_data)
-    msg = xmltodict.parse(to_text(raw_data))['xml']
-    logger.info("[get_msg] {}".format(msg))
+
+    root = ET.fromstring(raw_data)
+    msg_encrypt = root.find('Encrypt').text
+    logger.info("[msg_encrypt] {}".format(msg_encrypt))
+
+    # msg = parse_message(raw_data)
+    # msg = xmltodict.parse(to_text(raw_data))['xml']
+    # logger.info("[get_msg] {}".format(msg))
     return ""
 
 
