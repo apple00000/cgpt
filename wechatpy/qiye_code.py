@@ -14,7 +14,7 @@ def aes_decrypt(secret_key, en_text):
 
 
 def de_echostr(echostr):
-    EncodingAESKey = 'IiAtjxa1uDm8j6aapYrCJDus1Hj8xlgWoKBvUTgY9dm'
+    EncodingAESKey = 'GI64oiGwSkHfuPp3LzxlV2CqrFVUWKMTs2VPCYGfoa6'
     AESKey = base64.b64decode(EncodingAESKey + '=')
     aes_msg = base64.b64decode(echostr)
     rand_msg = aes_decrypt(AESKey, aes_msg)

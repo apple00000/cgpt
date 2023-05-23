@@ -292,7 +292,7 @@ def wechat_msg_qiye():
     msg = qiye_code.de_echostr(echostr)
     logger.info("[wechat_msg_qiye] msg {} {}".format(msg, str(msg)))
 
-    return ""
+    return msg
 
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
