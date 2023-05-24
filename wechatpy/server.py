@@ -294,19 +294,9 @@ def wechat_msg_qiye():
 
     # return msg
 
-    raw_data = request.data
-    logger.info("[raw_data] {}".format(raw_data))
+    t=Thread(target=get_qiye_ai_zpsf, args=())
+    t.start()
 
-    root = ET.fromstring(raw_data)
-    msg_encrypt = root.find('Encrypt').text
-    logger.info("[msg_encrypt] {}".format(msg_encrypt))
-
-    msg = qiye_code.de_echostr(msg_encrypt)
-    logger.info("[msg] {}".format(msg))
-
-    # msg = parse_message(raw_data)
-    # msg = xmltodict.parse(to_text(raw_data))['xml']
-    # logger.info("[get_msg] {}".format(msg))
     return ""
 
 
@@ -385,6 +375,44 @@ def get_ai(openid, content, system_desc, server, c, add_text):
             res_code = c.message.send_text(openid, add_text.strip())
             logger.info("[send_text] add_text {}".format(res_code))
 
+
+# 企业ai（祖平说房）
+def get_qiye_ai_zpsf(): 
+    ms = qiye_code.get_reply_msg(1)
+    for m in ms:
+        open_kfid = m['open_kfid']
+        openid = m['external_userid']
+        content = m['text']['content']
+
+        logger.info("[get_qiye_ai] {} {}".format(openid, content))
+
+        self_knowledge = ""
+        self_knowledge = es.es_self_knowledge("1", content)
+        # 推荐附加
+        rec = recommend.match_product(content, recommend.zpsf_recommend_info)
+        if rec!='':
+            rec = '\n'+rec
+        logger.info("match_product {}".format(rec))
+
+        post_dict = {}
+        post_dict["session"] = openid
+        post_dict["query"] = content
+        post_dict["system"] = zpsf_system_desc+'\n'+self_knowledge
+        post_dict["server"] = ""
+
+        j = json.dumps(post_dict)        
+
+        res = requests.post(url='http://34.28.10.140:10001', data=j)
+        logger.info("[ai_res] {}".format(res.text))
+
+        if len(res.text+rec)<=280:
+            qiye_code.reply_user(1, openid, open_kfid, res.text+rec)
+        else:
+            qiye_code.reply_user(1, openid, open_kfid, res.text)
+            if rec!='':
+                qiye_code.reply_user(1, openid, open_kfid, rec.strip())
+
+
 # 主动发送消息
 def send_text(openid, content, c):
     c.message.send_text(openid, content)
@@ -392,6 +420,8 @@ def send_text(openid, content, c):
 
 if __name__ == '__main__':  
     load_system_desc()
+
+    qiye_code.get_new_msg(1)
 
     # 加载推荐列表
     recommend.load_recommend_file("./福州购房宝典.txt", recommend.zpsf_recommend_info)

@@ -1,12 +1,17 @@
-import xml.etree.ElementTree as ET
+import qiye_code
+import time
+import requests
 
-xml_str = '''<xml> 
-   <ToUserName><![CDATA[toUser]]></ToUserName>
-   <AgentID><![CDATA[toAgentID]]></AgentID>
-   <Encrypt><![CDATA[msg_encrypt]]></Encrypt>
-</xml>'''
+print(qiye_code.get_new_msg(1))
+time.sleep(10)
 
-root = ET.fromstring(xml_str)
-msg_encrypt = root.find('Encrypt').text
 
-print(msg_encrypt)
+ms = qiye_code.get_reply_msg(1)
+print("ms", ms)
+for m in ms:
+	open_kfid = m['open_kfid']
+	external_userid = m['external_userid']
+	content = m['text']['content']
+
+	qiye_code.reply_user(1, external_userid, open_kfid, "h"+content)
+    
