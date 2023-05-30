@@ -173,16 +173,3 @@ if __name__ == '__main__':
     echostr = parse.unquote(echostr)
     ret = de_echostr(echostr)
     print('解密后的echostr', ret)
-
-
-
-
-curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bcfc5910-ad4a-4b73-9109-671c11670719' \
-   -H 'Content-Type: application/json' \
-   -d '
-   {
-    	"msgtype": "text",
-    	"text": {
-        	"content": "hello"
-    	}
-   }'
