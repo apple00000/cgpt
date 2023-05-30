@@ -15,21 +15,19 @@ CACHE_DURATION_SEC = 3600  # 缓存时间1小时
 access_token_cache = {}  # 缓存字典，存储键值对及过期时间
 msg_cache = {} # 消息缓存
 
+# 获取access_token，cor为企业标记，1：祖平说房，2：马上创业网
 def get_access_token(cor):
     corpid = ''
     corpsecret = ''
-    cache_token = ''
+    cache_token = 'access_token_'+str(cor)
 
     if cor == 1:
         corpid = 'wwa249537cfc0adce1'
         corpsecret = 'qFrplgZV6GulTvUyydqCcz_yQoDXIxGBYLmrOinLRII'
-        cache_token = 'access_token_1'
 
     elif cor == 2:
         corpid = ''
-        corpsecret = ''
-        cache_token = ''
-        
+        corpsecret = ''   
 
     # 如果数据已经在缓存中，直接返回
     if cache_token in access_token_cache and access_token_cache[cache_token]["expire_time"] > time.time():
@@ -175,3 +173,16 @@ if __name__ == '__main__':
     echostr = parse.unquote(echostr)
     ret = de_echostr(echostr)
     print('解密后的echostr', ret)
+
+
+
+
+curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=bcfc5910-ad4a-4b73-9109-671c11670719' \
+   -H 'Content-Type: application/json' \
+   -d '
+   {
+    	"msgtype": "text",
+    	"text": {
+        	"content": "hello"
+    	}
+   }'
