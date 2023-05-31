@@ -154,7 +154,7 @@ def zupingshuofang(key, value):
         content = msg['Content']
         logger.info("[get_msg_content] {}".format(content))
 
-        zfsp_auto_reply(client, openid, content)
+        zpsf_auto_reply(client, openid, content)
 
         # 菜单消息
         # if content=='你好':
@@ -198,35 +198,38 @@ def zupingshuofang(key, value):
         return ""
     
 
-# 祖平说房自动回复 
-def zfsp_auto_reply(client, openid, str):
+def get_zpsf_auto_reply(str):
     if '人才房' in str:
-        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【重磅！福州发放政策“大礼包”！涉及公租房、人才住房……】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247487860&idx=1&sn=57c2965aa48c13625f22527c90bea25a&chksm=eaeb13ccdd9c9adadbb6a51cb977349b711ab99fb39c51258b8960d751a7fecdcdbc90641697&token=1846401951&lang=zh_CN#rd')
-        logger.info("[send_text] text {}".format(res_code))
+        return '推荐阅读这篇公众号文章【重磅！福州发放政策“大礼包”！涉及公租房、人才住房……】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247487860&idx=1&sn=57c2965aa48c13625f22527c90bea25a&chksm=eaeb13ccdd9c9adadbb6a51cb977349b711ab99fb39c51258b8960d751a7fecdcdbc90641697&token=1846401951&lang=zh_CN#rd'
 
     if '地铁' in str:
-        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【提前谋划6条线路，福州最新地铁建设规划曝光】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247488076&idx=1&sn=ebd805fbd63705f2426c436a5c544138&chksm=eaeb10f4dd9c99e25b5cf8422bca034287c356d6b1dec17ee2baa7e16e826245948320380d9c&token=1846401951&lang=zh_CN#rd')
-        logger.info("[send_text] text {}".format(res_code))
+        return '推荐阅读这篇公众号文章【提前谋划6条线路，福州最新地铁建设规划曝光】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247488076&idx=1&sn=ebd805fbd63705f2426c436a5c544138&chksm=eaeb10f4dd9c99e25b5cf8422bca034287c356d6b1dec17ee2baa7e16e826245948320380d9c&token=1846401951&lang=zh_CN#rd'
 
     if '落户' in str:
-        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【福州落户最全指南，拿走不谢】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247484588&idx=1&sn=ba3baaaeb63599f64dda66dc7998c89c&chksm=eaeb0614dd9c8f022a45e00a1197b8f14cfb855c3e0d1da68e592166eb699244243f072b70c7&token=1846401951&lang=zh_CN#rd')
-        logger.info("[send_text] text {}".format(res_code))
+        return '推荐阅读这篇公众号文章【福州落户最全指南，拿走不谢】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247484588&idx=1&sn=ba3baaaeb63599f64dda66dc7998c89c&chksm=eaeb0614dd9c8f022a45e00a1197b8f14cfb855c3e0d1da68e592166eb699244243f072b70c7&token=1846401951&lang=zh_CN#rd'
 
     if '税收' in str:
-        res_code = client.message.send_text(openid, '推荐阅读这篇公众号文章【怎么判定名下房产套数？买卖房屋需缴纳多少税费？福州房产交易最全指南】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247486998&idx=1&sn=21a942d77ec508281e23ca3bd8861e5f&chksm=eaeb0caedd9c85b8b5d2575626424b4f52c4543022f3d333a7520e2f3833f8a404595222a0f4&token=1846401951&lang=zh_CN#rd')
-        logger.info("[send_text] text {}".format(res_code))
+        return '推荐阅读这篇公众号文章【怎么判定名下房产套数？买卖房屋需缴纳多少税费？福州房产交易最全指南】\nhttps://mp.weixin.qq.com/s?__biz=MzI2ODc4NTYyMw==&mid=2247486998&idx=1&sn=21a942d77ec508281e23ca3bd8861e5f&chksm=eaeb0caedd9c85b8b5d2575626424b4f52c4543022f3d333a7520e2f3833f8a404595222a0f4&token=1846401951&lang=zh_CN#rd'
 
     if '直播' in str:
-        res_code = client.message.send_text(openid, '【直播】\n福州楼市政策，搜索抖音号：福州祖平说房；\n楼市干货直播，每周二、四晚9-12点\n1.搜索抖音号：福州祖平说房【直播号丨佑居】\n2.点击链接：https://apptwzlpzwb4621.h5.xiaoeknow.com')
+        return '【直播】\n福州楼市政策，搜索抖音号：福州祖平说房；\n楼市干货直播，每周二、四晚9-12点\n1.搜索抖音号：福州祖平说房【直播号丨佑居】\n2.点击链接：https://apptwzlpzwb4621.h5.xiaoeknow.com'
+
+    if '地图' in str:
+        return '【福州楼市地图】点击下方链接即可领取\nhttps://apptwzlpzwb4621.h5.xiaoeknow.com/p/course/text/i_61518c0fe4b0448bf65ddf09'
+    
+    return ''
+
+
+# 祖平说房自动回复 
+def zpsf_auto_reply(client, openid, str):
+    r = get_zpsf_auto_reply(str)
+    if r!='':
+        res_code = client.message.send_text(openid, r)
         logger.info("[send_text] text {}".format(res_code))
 
     if '微信' in str:
         res_code = client.message.send_image(openid, 'PFrQoA4lwFQr5sLE_F4HjBermVpDQ4GqoeqghzeD6plj7lp1XfqQmvEgDpG_hJyO')
         logger.info("[send_text] image {}".format(res_code))
-
-    if '地图' in str:
-        res_code = client.message.send_text(openid, '【福州楼市地图】点击下方链接即可领取\nhttps://apptwzlpzwb4621.h5.xiaoeknow.com/p/course/text/i_61518c0fe4b0448bf65ddf09')
-        logger.info("[send_text] text {}".format(res_code))
 
 
 # 私有号
@@ -376,6 +379,23 @@ def get_ai(openid, content, system_desc, server, c, add_text):
             logger.info("[send_text] add_text {}".format(res_code))
 
 
+# 正常调用ai
+def get_ai_normal(openid, content, system_desc, server):
+    logger.info("[get_ai_nrrmal] {} {}".format(openid, content))
+
+    post_dict = {}
+    post_dict["session"] = openid
+    post_dict["query"] = content
+    post_dict["system"] = system_desc
+    post_dict["server"] = server
+
+    j = json.dumps(post_dict)
+
+    res = requests.post(url='http://34.28.10.140:10001', data=j)
+    logger.info("[get_ai_nrrmal] {}".format(res.text))
+    return res.text
+
+
 # 企业ai（祖平说房）
 def get_qiye_ai_zpsf(): 
     ms = qiye_code.get_reply_msg(1)
@@ -416,6 +436,59 @@ def get_qiye_ai_zpsf():
 # 主动发送消息
 def send_text(openid, content, c):
     c.message.send_text(openid, content)
+
+
+# 提供一个http请求的接口
+@app.route('/get_normal_msg', methods=['GET', 'POST'])
+def get_normal_msg():
+    j = json.loads(request.data)
+    session = j['session']  #用户
+    server = j['server']    #公司
+    query = j['query']      #内容
+
+    # 祖平说房
+    if server == '0':
+        return get_normal_msg_zpsf(session, query)
+    
+    if server == '1':
+        return get_normal_msg_mscy(session, query)
+    
+    return ''
+
+    
+# 祖平说房微信回复
+def get_normal_msg_zpsf(openid, query):
+    res = []
+    # 自动回复
+    r = get_zpsf_auto_reply(query)
+    if r!='':
+        res.append(r)
+
+    # 带货
+    r = recommend.match_product(query, recommend.zpsf_recommend_info)
+    if r!='':
+        res.append(r)
+
+    # ai
+    self_knowledge = es.es_self_knowledge("1", query)
+    r = get_ai_normal(openid, query, zpsf_system_desc+'\n'+self_knowledge, '0')
+    if r!='':
+        res.append(r)
+    
+    return '$$$$$'.join(res)
+
+
+# 马上创业微信回复
+def get_normal_msg_mscy(openid, query):
+    res = []
+    # ai
+    tmp = es.es_self_knowledge("2", query)
+    self_knowledge = '\n\n【马上创业网】问答资料：\n' + tmp
+    r = get_ai_normal(openid, query, mscy_system_desc+'\n'+self_knowledge, '1')
+    if r!='':
+        res.append(r)
+    
+    return '$$$$$'.join(res)
 
 
 if __name__ == '__main__':  
