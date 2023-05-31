@@ -459,6 +459,12 @@ def get_normal_msg():
 # 祖平说房微信回复
 def get_normal_msg_zpsf(openid, query):
     res = []
+    # ai
+    self_knowledge = es.es_self_knowledge("1", query)
+    r = get_ai_normal(openid, query, zpsf_system_desc+'\n'+self_knowledge, '0')
+    if r!='':
+        res.append(r)
+    
     # 自动回复
     r = get_zpsf_auto_reply(query)
     if r!='':
@@ -469,12 +475,6 @@ def get_normal_msg_zpsf(openid, query):
     if r!='':
         res.append(r)
 
-    # ai
-    self_knowledge = es.es_self_knowledge("1", query)
-    r = get_ai_normal(openid, query, zpsf_system_desc+'\n'+self_knowledge, '0')
-    if r!='':
-        res.append(r)
-    
     return '$$$$$'.join(res)
 
 
