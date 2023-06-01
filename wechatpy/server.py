@@ -453,6 +453,9 @@ def get_normal_msg():
     if server == '1':
         return get_normal_msg_mscy(session, query)
     
+    if server == '100':
+        return get_normal_msg_common(session, query)
+    
     return ''
 
     
@@ -485,6 +488,16 @@ def get_normal_msg_mscy(openid, query):
     tmp = es.es_self_knowledge("2", query)
     self_knowledge = '\n\n【马上创业网】问答资料：\n' + tmp
     r = get_ai_normal(openid, query, mscy_system_desc+'\n'+self_knowledge, '1')
+    if r!='':
+        res.append(r)
+    
+    return '$$$$$'.join(res)
+
+
+# 普通回复
+def get_normal_msg_common(openid, query):
+    res = []
+    r = get_ai_normal(openid, query, '', '0')
     if r!='':
         res.append(r)
     
