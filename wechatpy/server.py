@@ -374,7 +374,7 @@ def get_ai(openid, content, system_desc, server, c, add_text):
     else:
         res_code = c.message.send_text(openid, res.text)
         logger.info("[send_text] {}".format(res_code))
-        if add_text!='':
+        if add_text.strip()!='':
             res_code = c.message.send_text(openid, add_text.strip())
             logger.info("[send_text] add_text {}".format(res_code))
 
