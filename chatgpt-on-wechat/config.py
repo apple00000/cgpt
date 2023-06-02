@@ -42,7 +42,7 @@ available_setting ={
 
 
     #chatgpt api参数 参考https://platform.openai.com/docs/api-reference/chat/create
-    "temperature": 0.9,
+    "temperature": 0.3,
     "top_p": 1,
     "frequency_penalty": 0,
     "presence_penalty": 0,
