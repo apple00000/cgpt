@@ -30,7 +30,7 @@ def save_data(path, es_index):
 
 if __name__ == '__main__': 
 	es.es_del_all_data('1')
-	save_data('./刚需探房_总结.txt', '1')
+	save_data('./祖平私有资料.txt', '1')
 	# file_list = get_files_from_dir('./mscyw')
 	# for file in file_list:
 	# 	save_data(file, '2')

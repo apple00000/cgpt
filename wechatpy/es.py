@@ -117,7 +117,7 @@ def es_query_str(idx, str):
 	query = {'query': 
 	  {'bool':
     	{'should':
-      		[{'match': {'title':{'query':str, 'boost':2}}},
+      		[{'match': {'title':{'query':str, 'boost':4}}},
 	 		 {'match': {'content':{'query':str, 'boost':1}}}
 	 		]
 	 	}

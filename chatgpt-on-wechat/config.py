@@ -40,7 +40,6 @@ available_setting ={
     "rate_limit_chatgpt": 20, # chatgpt的调用频率限制
     "rate_limit_dalle": 50, # openai dalle的调用频率限制
 
-
     #chatgpt api参数 参考https://platform.openai.com/docs/api-reference/chat/create
     "temperature": 0.3,
     "top_p": 1,
