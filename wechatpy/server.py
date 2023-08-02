@@ -365,7 +365,7 @@ def get_ai(openid, content, system_desc, server, c, add_text):
 
     j = json.dumps(post_dict)
 
-    res = requests.post(url='http://34.28.10.140:10001', data=j)
+    res = requests.post(url='http://0.0.0.0:10001', data=j)
     logger.info("[ai_res] {}".format(res.text))
 
     if len(res.text+add_text)<=280:
@@ -391,7 +391,7 @@ def get_ai_normal(openid, content, system_desc, server):
 
     j = json.dumps(post_dict)
 
-    res = requests.post(url='http://34.28.10.140:10001', data=j)
+    res = requests.post(url='http://0.0.0.0:10001', data=j)
     logger.info("[get_ai_nrrmal] {}".format(res.text))
     return res.text
 
@@ -422,7 +422,7 @@ def get_qiye_ai_zpsf():
 
         j = json.dumps(post_dict)        
 
-        res = requests.post(url='http://34.28.10.140:10001', data=j)
+        res = requests.post(url='http://0.0.0.0:10001', data=j)
         logger.info("[ai_res] {}".format(res.text))
 
         if len(res.text+rec)<=280:
