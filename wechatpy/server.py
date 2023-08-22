@@ -463,10 +463,10 @@ def get_normal_msg():
 def get_normal_msg_zpsf(openid, query):
     res = []
     # ai
-    self_knowledge = es.es_self_knowledge("1", query)
-    r = get_ai_normal(openid, query, zpsf_system_desc+'\n'+self_knowledge, '0')
-    if r!='':
-        res.append(r)
+    # self_knowledge = es.es_self_knowledge("1", query)
+    # r = get_ai_normal(openid, query, zpsf_system_desc+'\n'+self_knowledge, '0')
+    # if r!='':
+    #     res.append(r)
     
     # 自动回复
     r = get_zpsf_auto_reply(query)
