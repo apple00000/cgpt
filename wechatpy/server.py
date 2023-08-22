@@ -170,8 +170,8 @@ def zupingshuofang(key, value):
             return ""
 
 
-        self_knowledge = ""
-        self_knowledge = es.es_self_knowledge("1", content)
+        # self_knowledge = ""
+        # self_knowledge = es.es_self_knowledge("1", content)
 
         # 推荐附加
         rec = recommend.match_product(content, recommend.zpsf_recommend_info)
@@ -179,8 +179,10 @@ def zupingshuofang(key, value):
             rec = '\n'+rec
         logger.info("match_product {}".format(rec))
 
-        t=Thread(target=get_ai, args=(openid, content, zpsf_system_desc+'\n'+self_knowledge, "", client, '\n'+rec))
-        t.start()
+        client.message.send_text(openid, rec)
+
+        # t=Thread(target=get_ai, args=(openid, content, zpsf_system_desc+'\n'+self_knowledge, "", client, '\n'+rec))
+        # t.start()
 
     # 事件
     elif msgType == 'event':
