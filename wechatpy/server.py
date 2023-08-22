@@ -105,22 +105,22 @@ def hello_world():
 def hello_world_zpsf():
     logger.info("hello_world_zpsf ...")
 
-    # # 验证服务器配置
-    # token = "zpsf01234560123456"
-    # signature = request.args['signature']
-    # timestamp = request.args['timestamp']
-    # nonce = request.args['nonce'] 
-    # echostr = request.args['echostr']
-    # logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
-    # try:
-    #     check_signature(token, signature, timestamp, nonce)
-    #     logger.info("check ok")
-    #     return echostr
-    # except InvalidSignatureException: 
-    #     logger.info("check fail")    
-    #     return ""
+    # 验证服务器配置
+    token = "zpsf01234560123456"
+    signature = request.args['signature']
+    timestamp = request.args['timestamp']
+    nonce = request.args['nonce'] 
+    echostr = request.args['echostr']
+    logger.info("[check] {} {} {} {}".format(signature, timestamp, nonce, echostr))
+    try:
+        check_signature(token, signature, timestamp, nonce)
+        logger.info("check ok")
+        return echostr
+    except InvalidSignatureException: 
+        logger.info("check fail")    
+        return ""
 
-    zupingshuofang('wxc1cc92da11178815', '7f15a75d60af6f5bfdb303b13fb0b4b0')
+    # zupingshuofang('wxc1cc92da11178815', '7f15a75d60af6f5bfdb303b13fb0b4b0')
     return ""
 
 
